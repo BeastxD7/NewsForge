@@ -54,11 +54,16 @@ describe("validate middleware", () => {
   it("validates query params when target is 'query'", () => {
     const next = mock(() => {})
     const querySchema = z.object({ page: z.coerce.number().default(1) })
-    const req = { body: {}, query: { page: "2" }, params: {} } as unknown as Request
+    // Use a plain object so assignment works (simulating Express 5 readonly via defineProperty)
+    const req = Object.create({})
+    Object.defineProperty(req, "query", { value: { page: "2" }, writable: false, configurable: true })
+    req.body = {}
+    req.params = {}
 
-    validate(querySchema, "query")(req, makeRes(), next as NextFunction)
+    validate(querySchema, "query")(req as unknown as Request, makeRes(), next as NextFunction)
 
     expect(next).toHaveBeenCalledWith()
-    expect(req.query).toEqual({ page: 2 })
+    // After defineProperty override, req.query should have coerced value
+    expect((req as unknown as Request).query).toEqual({ page: 2 })
   })
 })
