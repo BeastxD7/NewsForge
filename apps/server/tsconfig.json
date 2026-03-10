@@ -6,13 +6,12 @@
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "noEmit": true,
     "paths": {
       "@news-app/db": ["../../packages/db/src/index.ts"],
       "@news-app/types": ["../../packages/types/src/index.ts"]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "../../packages/db/src", "../../packages/types/src"],
+  "exclude": ["node_modules"]
 }

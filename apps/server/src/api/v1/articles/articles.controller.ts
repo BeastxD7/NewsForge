@@ -9,17 +9,17 @@ export const articlesController = {
   },
 
   async findBySlug(req: Request, res: Response): Promise<void> {
-    const article = await articlesService.findBySlug(req.params.slug)
+    const article = await articlesService.findBySlug(String(req.params.slug))
     apiSuccess(res, article)
   },
 
   async update(req: Request, res: Response): Promise<void> {
-    const article = await articlesService.update(req.params.id, req.body)
+    const article = await articlesService.update(String(req.params.id), req.body)
     apiSuccess(res, article, "Article updated")
   },
 
   async remove(req: Request, res: Response): Promise<void> {
-    await articlesService.remove(req.params.id)
+    await articlesService.remove(String(req.params.id))
     apiNoContent(res)
   },
 }

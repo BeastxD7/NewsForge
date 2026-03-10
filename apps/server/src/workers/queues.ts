@@ -1,5 +1,9 @@
 import { Queue } from "bullmq"
-import { redis } from "../config/redis"
+import { env } from "../config/env"
+
+// Pass URL-based connection to avoid ioredis version type conflicts between
+// BullMQ's peer dep and the standalone ioredis used elsewhere.
+const bullMQConnection = { url: env.REDIS_URL, maxRetriesPerRequest: null as unknown as undefined }
 
 const defaultJobOptions = {
   attempts: 3,
@@ -12,32 +16,32 @@ const defaultJobOptions = {
 }
 
 export const newsFetchQueue = new Queue("news-fetch", {
-  connection: redis,
+  connection: bullMQConnection,
   defaultJobOptions,
 })
 
 export const rssFetchQueue = new Queue("rss-fetch", {
-  connection: redis,
+  connection: bullMQConnection,
   defaultJobOptions,
 })
 
 export const trendsFetchQueue = new Queue("trends-fetch", {
-  connection: redis,
+  connection: bullMQConnection,
   defaultJobOptions,
 })
 
 export const youtubeMonitorQueue = new Queue("youtube-monitor", {
-  connection: redis,
+  connection: bullMQConnection,
   defaultJobOptions,
 })
 
 export const youtubeProcessQueue = new Queue("youtube-process", {
-  connection: redis,
+  connection: bullMQConnection,
   defaultJobOptions,
 })
 
 export const audioProcessQueue = new Queue("audio-process", {
-  connection: redis,
+  connection: bullMQConnection,
   defaultJobOptions,
 })
 

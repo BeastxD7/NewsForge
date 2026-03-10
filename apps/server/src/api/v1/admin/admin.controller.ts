@@ -84,8 +84,9 @@ export const adminController = {
   },
 
   async getJob(req: Request, res: Response): Promise<void> {
+    const id = String(req.params.id)
     const job = await prisma.jobRun.findUnique({
-      where: { id: req.params.id },
+      where: { id },
       include: {
         source: true,
         channel: true,
@@ -97,7 +98,8 @@ export const adminController = {
   },
 
   async cancelJob(req: Request, res: Response): Promise<void> {
-    const job = await prisma.jobRun.findUnique({ where: { id: req.params.id } })
+    const id = String(req.params.id)
+    const job = await prisma.jobRun.findUnique({ where: { id } })
     if (!job) throw new NotFoundError("Job not found")
 
     if (job.bullJobId) {
@@ -107,7 +109,7 @@ export const adminController = {
       }
     }
 
-    await prisma.jobRun.update({ where: { id: req.params.id }, data: { status: "CANCELLED" } })
+    await prisma.jobRun.update({ where: { id }, data: { status: "CANCELLED" } })
     apiNoContent(res)
   },
 }
