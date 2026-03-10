@@ -1,0 +1,11 @@
+[install]
+# Freeze lockfile in CI, allow updates locally
+# exact = false
+
+[install.cache]
+# Use shared cache across workspace
+dir = "~/.bun/install/cache"
+
+[run]
+# Bun shell settings
+bun = true
