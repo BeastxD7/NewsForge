@@ -6,6 +6,7 @@
 
 ## Table of Contents
 
+0. [How It All Works — Plain English](#0-how-it-all-works--plain-english)
 1. [Project Concept](#1-project-concept)
 2. [Core Features](#2-core-features)
 3. [System Architecture](#3-system-architecture)
@@ -24,7 +25,262 @@
 
 ---
 
-## 1. Project Concept
+## 0. How It All Works — Plain English
+
+> Read this first. No jargon. No diagrams. Just a clear story of what happens, why, and how every piece connects.
+
+---
+
+### The Big Idea in One Sentence
+
+NewsForge watches the internet 24/7, and the moment something trending is detected — a breaking news story, a new YouTube video, a rising Google search — it automatically writes a full SEO-optimised article about it and puts it in a queue for an admin to approve and publish.
+
+---
+
+### Who Uses This and What Do They Do?
+
+There are two types of people who interact with NewsForge:
+
+**Readers (Users)**
+Regular visitors to the website. They browse articles, search for topics, and read content. They never log in. They never see the backend. They just get fast, well-written articles on topics they care about.
+
+**Publishers (Admins)**
+The people running the platform. They log into a private dashboard where they can:
+- See all the AI-drafted articles waiting to be reviewed
+- Read through a draft, make edits if needed, then hit Approve
+- Add YouTube channels so the system monitors them automatically
+- Configure what topics and keywords the system should focus on
+- Manually paste a YouTube URL or upload a podcast to trigger article generation on demand
+- See a live feed of all the background jobs running (what's processing, what failed, what completed)
+
+---
+
+### Where Does the Content Come From?
+
+The system has six content sources. Each one feeds into the same pipeline:
+
+**1. News APIs (NewsAPI, GNews)**
+These are paid/free services that aggregate headlines from thousands of news websites worldwide. NewsForge calls them every 30 minutes, filters results by the topics the admin has configured, and sends any new headlines to the AI to be rewritten as full articles.
+
+**2. RSS Feeds**
+Almost every news website publishes an RSS feed — a simple list of their latest articles. NewsForge checks each configured RSS feed every 15 minutes. If there's a new article it hasn't seen before, it rewrites it as original content.
+
+**3. Google Trends**
+Every few hours, NewsForge checks what topics are trending globally on Google. If a trend matches any of the admin's configured keywords, it generates an article about that trend from scratch — even if no news source has covered it yet.
+
+**4. YouTube Channel Monitor**
+The admin adds a YouTube channel URL to the dashboard. Every 10 minutes, NewsForge checks that channel for new videos. The moment a new video is posted, it automatically pulls the transcript and generates articles from it.
+
+**5. YouTube URL (Manual)**
+The admin pastes any YouTube video URL directly into the dashboard. The system immediately transcribes the video and generates articles. This is useful for one-off videos the admin spots manually.
+
+**6. Podcast / Audio Upload**
+The admin uploads an MP3 or audio file directly. The system transcribes the audio and turns it into articles — great for podcasts, interviews, or recorded talks.
+
+---
+
+### What Happens When a New Video or Article Is Detected?
+
+Here is the exact sequence of events, step by step, in plain English:
+
+```
+Step 1 — Detection
+  A background job (running silently in the background, like a cron job)
+  checks a source — a YouTube channel, a news API, an RSS feed, etc.
+  It finds something new that hasn't been processed before.
+
+Step 2 — Queue
+  The job drops a "task" into a queue (like a to-do list stored in Redis).
+  The queue holds the task safely until a worker picks it up.
+  This means even if the server is busy, nothing gets lost.
+
+Step 3 — Worker Picks It Up
+  A worker process (think of it as a dedicated employee for one type of job)
+  picks the task from the queue and starts processing it.
+
+Step 4 — Transcription (if video/audio)
+  If the source is a YouTube video or audio file:
+  - The worker first tries to get the auto-generated captions from YouTube.
+  - If no captions exist, it downloads the audio and runs it through
+    a speech-to-text service (Whisper AI) to get the full transcript.
+  - For a news article or RSS item, there's no transcription needed —
+    the text is already there.
+
+Step 5 — Splitting (for long content)
+  If the content is long (a 60-minute podcast, for example), it would make
+  a terrible single article. So the worker splits it into segments:
+  - Under 10 minutes → 1 article
+  - 10–20 minutes → 2 articles
+  - 20–40 minutes → 3 articles
+  - 40–60 minutes → 4 articles
+  - Over 60 minutes → 5 or more articles
+  Each segment covers a distinct topic or chapter from the content.
+
+Step 6 — AI Writing (Claude)
+  For each segment (or for each news item), the worker sends the text to
+  Claude AI (Anthropic's model) with a detailed prompt that says:
+  "Write a high-quality, SEO-optimised news article about this. Include
+  a compelling title, a meta description, proper headings, naturally
+  embedded keywords, and a clear structure."
+  Claude responds with a fully written article.
+
+Step 7 — Saved as Draft
+  The finished article is saved to the database with the status "DRAFT".
+  It is NOT published yet. Nobody can see it on the public website.
+  It simply sits in the admin's review queue, waiting.
+
+Step 8 — Admin Reviews
+  The admin logs into the dashboard, sees the new draft, reads it,
+  optionally edits it, then clicks Approve.
+  The article status changes to "APPROVED", a publish timestamp is set,
+  and it immediately appears on the public website.
+  If the draft is poor quality, the admin can Reject it — it disappears
+  from the queue and is never published.
+```
+
+---
+
+### How Do the Different Parts of the Codebase Talk to Each Other?
+
+There are three separate processes running at the same time. Here is what each one does and how they connect:
+
+**The Website (Next.js — `apps/web`)**
+
+This is what readers and admins see in their browser. It serves two audiences:
+- Public pages (homepage, article pages, category pages) — anyone can visit these
+- Admin dashboard (protected behind login) — only admins can access these
+
+When the website needs data (like a list of articles), it makes an HTTP request to the API server. It does not talk to the database directly — everything goes through the API.
+
+The website also handles login. When an admin logs in, a session is created and stored in the database. That session token is used to prove their identity on every request.
+
+**The API Server (Express — `apps/server`)**
+
+This is the brain of the operation. It handles all the data logic:
+- Receives requests from the website
+- Checks if the person is allowed to do what they're asking (auth)
+- Reads from or writes to the database
+- Triggers background jobs when the admin does something (like manually ingesting a YouTube URL)
+- Returns clean, structured data back to the website
+
+The API server also runs the background workers. When it starts up, it initialises all the job queues and starts listening for tasks.
+
+**The Database (PostgreSQL)**
+
+This is where everything is permanently stored:
+- All articles (drafts, published, rejected)
+- User accounts and sessions
+- Categories, tags, topics
+- YouTube channels being monitored
+- Content source configurations
+- A record of every background job that ran (success or failure)
+
+The database never talks to the browser directly. Only the API server can read from or write to it.
+
+**Redis (The Queue)**
+
+Redis is an in-memory store used specifically for the job queue. When a background job needs to be done (e.g. "process this YouTube video"), a task is pushed into Redis. Workers pull tasks from Redis and process them. If the server restarts mid-processing, the task is still in Redis and will be retried. Think of Redis as a very fast, reliable to-do list that survives crashes.
+
+---
+
+### How Does an Article Go From Nothing to Published?
+
+Here is the full lifecycle of a single article, from detection to a reader seeing it:
+
+```
+[Source detects new content]
+        ↓
+[Task added to Redis queue]
+        ↓
+[Worker picks up task]
+        ↓
+[Content fetched / transcribed]
+        ↓
+[Split into segments if long]
+        ↓
+[Claude AI writes each article]
+        ↓
+[Article saved to DB — status: DRAFT]
+        ↓
+[Admin sees it in review queue]
+        ↓
+    [Admin clicks Approve]
+        ↓
+[Status → APPROVED, publishedAt set]
+        ↓
+[Article appears on public website]
+        ↓
+[Next.js page re-renders with new content]
+        ↓
+[Google crawls it and indexes it]
+        ↓
+[Readers find it via search]
+```
+
+---
+
+### Why Is It Split Into Two Separate Apps (Web + Server)?
+
+This is the most common question. Here is the honest reason:
+
+The website (Next.js) is great at rendering pages fast and handling user sessions. But it's terrible at running long background tasks — things like transcribing a 2-hour podcast, polling 20 RSS feeds every 15 minutes, or processing a queue of video jobs. If you try to run those inside a Next.js app, they either time out or block the web server.
+
+The Express server, on the other hand, is a long-running process that can handle background workers, maintain persistent queue connections to Redis, and process things at its own pace without any timeout constraints.
+
+So the split is deliberate:
+- Next.js handles everything the user sees and interacts with
+- Express handles everything that runs in the background
+
+They share one database (PostgreSQL) and communicate over HTTP when needed.
+
+---
+
+### Why Does an Admin Have to Approve Every Article?
+
+Two reasons:
+
+**Quality control.** AI is good but not perfect. Occasionally an article might be off-topic, contain a factual error, or have an awkward tone. A quick human review catches these before they go live.
+
+**Legal protection.** Publishing AI-generated content without review could lead to copyright issues, defamation claims, or factual inaccuracies that embarrass the brand. A human approval step creates accountability.
+
+The review process is designed to be fast — an admin should be able to read a draft and approve or reject it in under 60 seconds.
+
+---
+
+### Why Is SEO Important Here and How Does the System Handle It?
+
+SEO (Search Engine Optimisation) is what makes Google rank your article above a competitor's. The key factors are:
+
+- **Speed** — Google favours sites that publish first on a topic
+- **Structure** — proper headings (H1, H2, H3), meta title, meta description
+- **Originality** — content that is not copied from another site
+- **Keywords** — the search terms your audience uses, naturally embedded in the text
+- **Volume** — more indexed pages = more chances to appear in search results
+
+NewsForge handles all of these automatically:
+- Claude AI is specifically prompted to structure every article with SEO in mind
+- Articles are generated within minutes of a topic appearing, so the site publishes early
+- Each YouTube video can produce multiple articles, multiplying indexed pages
+- Content is rewritten, not copied, so Google treats it as original
+
+---
+
+### What Happens If Something Goes Wrong?
+
+Everything that could fail has a safety net:
+
+| What fails | What happens |
+|---|---|
+| A worker crashes mid-job | Redis still holds the task. It gets retried up to 3 times automatically |
+| Claude API is slow or returns an error | The job fails and retries with exponential backoff (waits 5s, then 25s, then 125s) |
+| The database is temporarily unreachable | The health endpoint returns 503 and the admin is alerted |
+| A YouTube video has no captions | The system downloads the audio and transcribes it with Whisper as a fallback |
+| An article is low quality | The admin rejects it. It never reaches readers |
+| A job fails 3 times in a row | It moves to the "failed" list in the admin dashboard for manual investigation |
+
+---
+
+*Last updated: Section 0 added — Plain English overview*
 
 NewsForge is a **fully automated AI content platform** built around a simple idea:
 
@@ -1064,5 +1320,5 @@ describe("articlesService.findBySlug", () => {
 
 ---
 
-*Last updated: Phase 1 — Foundation complete*
+*Last updated: Phase 1 complete — plain English overview added*
 *Next milestone: Phase 2 — Core read/write path*
