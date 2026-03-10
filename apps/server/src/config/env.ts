@@ -13,9 +13,19 @@ const envSchema = z.object({
   // Auth
   API_SECRET: z.string().min(1, "API_SECRET is required"),
   NEXTAUTH_SECRET: z.string().min(1, "NEXTAUTH_SECRET is required"),
+  NEXTAUTH_URL: z.string().default("http://localhost:3000"),
 
-  // AI
-  ANTHROPIC_API_KEY: z.string().min(1, "ANTHROPIC_API_KEY is required"),
+  // AI — Anthropic (default provider)
+  ANTHROPIC_API_KEY: z.string().optional(),
+
+  // AI — Groq (optional)
+  GROQ_API_KEY: z.string().optional(),
+
+  // AI — OpenRouter (optional)
+  OPENROUTER_API_KEY: z.string().optional(),
+
+  // AI — Azure OpenAI (optional)
+  AZURE_OPENAI_API_KEY: z.string().optional(),
 
   // Content APIs (optional — workers will skip if missing)
   NEWSAPI_KEY: z.string().optional(),

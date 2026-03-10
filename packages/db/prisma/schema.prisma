@@ -9,6 +9,13 @@ datasource db {
 
 // ─── Enums ───────────────────────────────────────────────────────────────────
 
+enum AIProvider {
+  ANTHROPIC
+  AZURE_OPENAI
+  GROQ
+  OPENROUTER
+}
+
 enum Role {
   USER
   ADMIN
@@ -283,4 +290,21 @@ model JobRun {
   @@index([type, status])
   @@index([createdAt])
   @@map("job_runs")
+}
+
+// ─── AI Configuration ─────────────────────────────────────────────────────────
+
+model AIConfig {
+  id          String     @id @default(cuid())
+  provider    AIProvider @default(ANTHROPIC)
+  model       String     @default("claude-sonnet-4-6")
+  temperature Float      @default(0.7)
+  maxTokens   Int        @default(4000)
+  // baseUrl is required for Azure OpenAI (endpoint URL) and optional for OpenRouter
+  baseUrl     String?
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("ai_configs")
 }

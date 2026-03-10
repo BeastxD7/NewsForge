@@ -11,9 +11,10 @@ export function errorHandler(
   // Zod validation errors
   if (err instanceof ZodError) {
     res.status(400).json({
-      error: "VALIDATION_ERROR",
-      message: "Invalid request data",
+      success: false,
       statusCode: 400,
+      message: "Invalid request data",
+      error: "VALIDATION_ERROR",
       details: err.flatten().fieldErrors,
     })
     return
@@ -22,9 +23,10 @@ export function errorHandler(
   // Known application errors
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
-      error: err.code,
-      message: err.message,
+      success: false,
       statusCode: err.statusCode,
+      message: err.message,
+      error: err.code,
     })
     return
   }
@@ -32,8 +34,9 @@ export function errorHandler(
   // Unknown errors
   console.error("[Error]", err)
   res.status(500).json({
-    error: "INTERNAL_ERROR",
-    message: "An unexpected error occurred",
+    success: false,
     statusCode: 500,
+    message: "An unexpected error occurred",
+    error: "INTERNAL_ERROR",
   })
 }

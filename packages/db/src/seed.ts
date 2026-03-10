@@ -52,6 +52,21 @@ async function main() {
   })
   console.log("Created default topic")
 
+  // Create default AI config (Anthropic Claude Sonnet)
+  const existingAIConfig = await prisma.aIConfig.findFirst({ where: { isActive: true } })
+  if (!existingAIConfig) {
+    await prisma.aIConfig.create({
+      data: {
+        provider: "ANTHROPIC",
+        model: "claude-sonnet-4-6",
+        temperature: 0.7,
+        maxTokens: 4000,
+        isActive: true,
+      },
+    })
+    console.log("Created default AI config (Anthropic / claude-sonnet-4-6)")
+  }
+
   console.log("Seeding complete!")
 }
 

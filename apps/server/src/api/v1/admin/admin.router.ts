@@ -1,6 +1,7 @@
 import { Router } from "express"
 import { requireAdmin } from "../../../middleware/require-admin"
 import { adminController } from "./admin.controller"
+import { aiConfigController } from "./ai-config.controller"
 import { validate } from "../../../middleware/validate"
 import { z } from "zod"
 
@@ -30,5 +31,16 @@ const jobQuerySchema = z.object({
 router.get("/jobs", validate(jobQuerySchema, "query"), adminController.listJobs)
 router.get("/jobs/:id", adminController.getJob)
 router.delete("/jobs/:id", adminController.cancelJob)
+
+// AI config
+const aiConfigSchema = z.object({
+  provider: z.enum(["ANTHROPIC", "AZURE_OPENAI", "GROQ", "OPENROUTER"]).optional(),
+  model: z.string().min(1).optional(),
+  temperature: z.coerce.number().min(0).max(2).optional(),
+  maxTokens: z.coerce.number().int().min(256).max(32000).optional(),
+  baseUrl: z.string().url().optional().nullable(),
+})
+router.get("/ai-config", aiConfigController.get)
+router.patch("/ai-config", validate(aiConfigSchema), aiConfigController.update)
 
 export { router as adminRouter }

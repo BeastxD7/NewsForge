@@ -1,4 +1,25 @@
-export interface PaginatedResponse<T> {
+// ─── Standardized response envelopes ─────────────────────────────────────────
+
+export interface ApiSuccess<T> {
+  success: true
+  statusCode: number
+  message: string
+  data: T
+}
+
+export interface ApiError {
+  success: false
+  statusCode: number
+  message: string
+  error: string
+  details?: Record<string, unknown>
+}
+
+export type ApiResponse<T> = ApiSuccess<T> | ApiError
+
+// ─── Paginated wrapper ────────────────────────────────────────────────────────
+
+export interface PaginatedData<T> {
   data: T[]
   total: number
   page: number
@@ -6,16 +27,9 @@ export interface PaginatedResponse<T> {
   totalPages: number
 }
 
-export interface ApiResponse<T> {
-  data: T
-  message?: string
-}
+export type PaginatedResponse<T> = ApiSuccess<PaginatedData<T>>
 
-export interface ApiError {
-  error: string
-  message: string
-  statusCode: number
-}
+// ─── Admin stats ──────────────────────────────────────────────────────────────
 
 export interface AdminStats {
   articles: {

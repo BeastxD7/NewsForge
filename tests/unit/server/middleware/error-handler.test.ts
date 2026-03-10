@@ -1,13 +1,12 @@
 import { describe, it, expect, mock } from "bun:test"
 import type { Request, Response, NextFunction } from "express"
-import { ZodError, z } from "zod"
+import { z } from "zod"
 import { errorHandler } from "../../../../apps/server/src/middleware/error-handler"
 import {
   AppError,
   NotFoundError,
   UnauthorizedError,
   ForbiddenError,
-  ValidationError,
 } from "../../../../apps/server/src/lib/errors"
 
 function makeRes() {
@@ -21,14 +20,14 @@ function makeRes() {
 const req = {} as Request
 const next = (() => {}) as NextFunction
 
-describe("errorHandler", () => {
-  it("handles NotFoundError with 404", () => {
+describe("errorHandler — standardized envelope", () => {
+  it("handles NotFoundError with 404 and success:false", () => {
     const res = makeRes()
     errorHandler(new NotFoundError("Article not found"), req, res, next)
 
     expect(res.status).toHaveBeenCalledWith(404)
     expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({ statusCode: 404, error: "NOT_FOUND" })
+      expect.objectContaining({ success: false, statusCode: 404, error: "NOT_FOUND" })
     )
   })
 
@@ -38,7 +37,7 @@ describe("errorHandler", () => {
 
     expect(res.status).toHaveBeenCalledWith(401)
     expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({ statusCode: 401, error: "UNAUTHORIZED" })
+      expect.objectContaining({ success: false, statusCode: 401, error: "UNAUTHORIZED" })
     )
   })
 
@@ -47,6 +46,9 @@ describe("errorHandler", () => {
     errorHandler(new ForbiddenError(), req, res, next)
 
     expect(res.status).toHaveBeenCalledWith(403)
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({ success: false, statusCode: 403 })
+    )
   })
 
   it("handles generic AppError with its statusCode", () => {
@@ -55,30 +57,28 @@ describe("errorHandler", () => {
 
     expect(res.status).toHaveBeenCalledWith(422)
     expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({ error: "UNPROCESSABLE" })
+      expect.objectContaining({ success: false, error: "UNPROCESSABLE" })
     )
   })
 
-  it("handles ZodError with 400", () => {
+  it("handles ZodError with 400 and VALIDATION_ERROR code", () => {
     const res = makeRes()
     const zodErr = z.object({ name: z.string() }).safeParse({})
-    if (!zodErr.success) {
-      errorHandler(zodErr.error, req, res, next)
-    }
+    if (!zodErr.success) errorHandler(zodErr.error, req, res, next)
 
     expect(res.status).toHaveBeenCalledWith(400)
     expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({ error: "VALIDATION_ERROR", statusCode: 400 })
+      expect.objectContaining({ success: false, statusCode: 400, error: "VALIDATION_ERROR" })
     )
   })
 
-  it("handles unknown errors with 500", () => {
+  it("handles unknown errors with 500 and INTERNAL_ERROR code", () => {
     const res = makeRes()
     errorHandler(new Error("Unexpected"), req, res, next)
 
     expect(res.status).toHaveBeenCalledWith(500)
     expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({ statusCode: 500, error: "INTERNAL_ERROR" })
+      expect.objectContaining({ success: false, statusCode: 500, error: "INTERNAL_ERROR" })
     )
   })
 })

@@ -3,6 +3,7 @@ import { prisma } from "../../../lib/prisma"
 import { articlesService } from "../articles/articles.service"
 import { NotFoundError } from "../../../lib/errors"
 import { allQueues } from "../../../workers/queues"
+import { apiSuccess, apiNoContent, apiPaginated } from "../../../lib/response"
 
 export const adminController = {
   async getStats(_req: Request, res: Response): Promise<void> {
@@ -30,30 +31,23 @@ export const adminController = {
         prisma.youtubeChannel.count({ where: { enabled: true } }),
       ])
 
-    res.json({
-      data: {
-        articles: {
-          draft: draftCount,
-          review: reviewCount,
-          approved: approvedCount,
-          rejected: rejectedCount,
-          total: totalArticles,
-        },
-        jobs: {
-          pending: pendingJobs,
-          running: runningJobs,
-          failed: failedJobs,
-          completedToday,
-        },
-        sources: { total: totalSources, enabled: enabledSources },
-        channels: { total: totalChannels, enabled: enabledChannels },
+    apiSuccess(res, {
+      articles: {
+        draft: draftCount,
+        review: reviewCount,
+        approved: approvedCount,
+        rejected: rejectedCount,
+        total: totalArticles,
       },
+      jobs: { pending: pendingJobs, running: runningJobs, failed: failedJobs, completedToday },
+      sources: { total: totalSources, enabled: enabledSources },
+      channels: { total: totalChannels, enabled: enabledChannels },
     })
   },
 
   async listArticles(req: Request, res: Response): Promise<void> {
     const result = await articlesService.listAdmin(req.query as never)
-    res.json(result)
+    apiPaginated(res, result)
   },
 
   async listJobs(req: Request, res: Response): Promise<void> {
@@ -80,7 +74,7 @@ export const adminController = {
       prisma.jobRun.count({ where }),
     ])
 
-    res.json({
+    apiPaginated(res, {
       data,
       total,
       page: Number(page),
@@ -99,7 +93,7 @@ export const adminController = {
       },
     })
     if (!job) throw new NotFoundError("Job not found")
-    res.json({ data: job })
+    apiSuccess(res, job)
   },
 
   async cancelJob(req: Request, res: Response): Promise<void> {
@@ -107,21 +101,13 @@ export const adminController = {
     if (!job) throw new NotFoundError("Job not found")
 
     if (job.bullJobId) {
-      // Find queue and remove job
       for (const queue of allQueues) {
         const bullJob = await queue.getJob(job.bullJobId)
-        if (bullJob) {
-          await bullJob.remove()
-          break
-        }
+        if (bullJob) { await bullJob.remove(); break }
       }
     }
 
-    await prisma.jobRun.update({
-      where: { id: req.params.id },
-      data: { status: "CANCELLED" },
-    })
-
-    res.status(204).send()
+    await prisma.jobRun.update({ where: { id: req.params.id }, data: { status: "CANCELLED" } })
+    apiNoContent(res)
   },
 }
