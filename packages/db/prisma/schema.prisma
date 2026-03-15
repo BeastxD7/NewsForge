@@ -11,6 +11,7 @@ datasource db {
 // ─── Enums ───────────────────────────────────────────────────────────────────
 
 enum AIProvider {
+  ANTHROPIC
   AZURE_OPENAI
   GROQ
   OPENROUTER
