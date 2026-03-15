@@ -141,40 +141,53 @@ except Exception as e:
 
 /**
  * Fetch transcript using youtube-transcript-api (Python).
- * No yt-dlp / JS runtime required — calls YouTube's transcript API directly.
- * Returns null if the package is not installed so the caller can fall back.
+ * Rotates through all proxies in YOUTUBE_PROXIES (comma-separated) until one works.
+ * Falls back to YOUTUBE_PROXY_URL, then no proxy.
  */
 async function fetchViaTranscriptApi(
   videoId: string,
   scriptPath: string
 ): Promise<TranscriptResult | null> {
-  // Use python3 on Linux, fall back to python on Windows
   const pythonCmd = process.platform === "win32" ? "python" : "python3"
-  const proxyUrl = process.env["YOUTUBE_PROXY_URL"] ?? ""
-  const r = await run(pythonCmd, [scriptPath, videoId, proxyUrl])
 
-  // Always try to parse stdout — the script emits JSON on both success and error
-  let parsed: { text?: string; duration?: number; language?: string; error?: string } = {}
-  if (r.stdout.trim()) {
-    try {
-      parsed = JSON.parse(r.stdout.trim()) as typeof parsed
-    } catch {
-      console.log(`[youtube] transcript-api bad JSON (code=${r.code}): ${r.stdout.slice(0, 200)}`)
-      return null
+  // Build proxy list: YOUTUBE_PROXIES (comma-separated) > YOUTUBE_PROXY_URL > no proxy
+  const proxyList: string[] = (process.env["YOUTUBE_PROXIES"] ?? process.env["YOUTUBE_PROXY_URL"] ?? "")
+    .split(",")
+    .map((p) => p.trim())
+    .filter(Boolean)
+  const attempts = proxyList.length > 0 ? proxyList : [""]
+
+  for (const proxy of attempts) {
+    const r = await run(pythonCmd, [scriptPath, videoId, proxy])
+
+    let parsed: { text?: string; duration?: number; language?: string; error?: string } = {}
+    if (r.stdout.trim()) {
+      try {
+        parsed = JSON.parse(r.stdout.trim()) as typeof parsed
+      } catch {
+        console.log(`[youtube] transcript-api bad JSON: ${r.stdout.slice(0, 200)}`)
+        continue
+      }
     }
+
+    if (parsed.text) {
+      if (proxy) console.log(`[youtube] transcript-api succeeded with proxy ${proxy.split("@")[1] ?? proxy}`)
+      return {
+        text: parsed.text,
+        estimatedDurationSecs: parsed.duration ?? 0,
+        language: parsed.language ?? "unknown",
+      }
+    }
+
+    const reason = parsed.error ?? (r.stderr.slice(0, 150) || "no output")
+    const isIpBlock = reason.includes("blocking") || reason.includes("RequestBlocked") || reason.includes("IPBlocked")
+    console.log(`[youtube] proxy ${proxy ? proxy.split("@")[1] : "none"} blocked=${isIpBlock}: ${reason.slice(0, 120)}`)
+
+    // Only continue rotating if YouTube blocked this proxy — other errors won't be fixed by a new IP
+    if (!isIpBlock) return null
   }
 
-  if (r.code !== 0 || parsed.error || !parsed.text) {
-    const reason = parsed.error ?? (r.stderr.slice(0, 200) || "no output")
-    console.log(`[youtube] transcript-api failed (code=${r.code}): ${reason}`)
-    return null
-  }
-
-  return {
-    text: parsed.text,
-    estimatedDurationSecs: parsed.duration ?? 0,
-    language: parsed.language ?? "unknown",
-  }
+  return null
 }
 
 /**
