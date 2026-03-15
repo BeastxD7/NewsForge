@@ -80,20 +80,18 @@ function run(cmd: string, args: string[]): Promise<{ stdout: string; stderr: str
 // Tries English first, falls back to any available language.
 // Supports proxy via YOUTUBE_PROXY_URL env var (needed on cloud VMs — Azure/AWS/GCP IPs are blocked by YouTube).
 const TRANSCRIPT_SCRIPT = String.raw`
-import sys, json, os
+import sys, json
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, TranscriptsDisabled
 
 video_id = sys.argv[1]
+proxy_url = sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] else None
 
 try:
-    # If YOUTUBE_PROXY_URL is set, inject it as standard HTTP_PROXY/HTTPS_PROXY env vars.
-    # The requests library (used internally) respects these automatically.
-    proxy_url = os.environ.get("YOUTUBE_PROXY_URL")
     if proxy_url:
-        os.environ["HTTP_PROXY"]  = proxy_url
-        os.environ["HTTPS_PROXY"] = proxy_url
-
-    api = YouTubeTranscriptApi()
+        from youtube_transcript_api.proxies import GenericProxyConfig
+        api = YouTubeTranscriptApi(proxy_config=GenericProxyConfig(https_url=proxy_url))
+    else:
+        api = YouTubeTranscriptApi()
     tl  = api.list(video_id)
 
     # Priority: manual English > auto English > any language
@@ -144,7 +142,8 @@ async function fetchViaTranscriptApi(
 ): Promise<TranscriptResult | null> {
   // Use python3 on Linux, fall back to python on Windows
   const pythonCmd = process.platform === "win32" ? "python" : "python3"
-  const r = await run(pythonCmd, [scriptPath, videoId])
+  const proxyUrl = process.env["YOUTUBE_PROXY_URL"] ?? ""
+  const r = await run(pythonCmd, [scriptPath, videoId, proxyUrl])
 
   if (r.code !== 0 || !r.stdout.trim()) {
     return null
