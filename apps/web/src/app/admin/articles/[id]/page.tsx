@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Calendar, Tag, ExternalLink } from "lucide-react"
-import { marked } from "marked"
+import { renderMarkdown } from "@/lib/markdown"
 import { serverApi } from "@/lib/api-server"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -23,7 +23,7 @@ export default async function AdminArticlePreviewPage({
     notFound()
   }
 
-  const contentHtml = await marked.parse(article.content)
+  const contentHtml = await renderMarkdown(article.content)
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">

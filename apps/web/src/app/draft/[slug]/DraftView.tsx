@@ -4,7 +4,7 @@ import { useState, useTransition } from "react"
 import { CoverImagePicker } from "@/components/admin/CoverImagePicker"
 import { useRouter } from "next/navigation"
 import NextLink from "next/link"
-import { marked } from "marked"
+import { renderMarkdownSync } from "@/lib/markdown"
 import { toast } from "sonner"
 import {
   ArrowLeft,
@@ -67,7 +67,7 @@ export function DraftView({ article }: DraftViewProps) {
     })
   }
 
-  const contentHtml = marked.parse(content) as string
+  const contentHtml = renderMarkdownSync(content)
 
   return (
     <div className="min-h-screen bg-background">

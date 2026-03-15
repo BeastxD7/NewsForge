@@ -21,9 +21,6 @@
     "test:integration": "bun test tests/integration",
     "test:watch": "bun test --watch tests/unit"
   },
-  "devDependencies": {
-    "zod": "^4.3.6"
-  },
   "overrides": {
     "ioredis": "5.10.0"
   }

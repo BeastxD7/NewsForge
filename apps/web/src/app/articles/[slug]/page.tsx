@@ -3,7 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { Clock, Tag, ExternalLink, Calendar, Hash } from "lucide-react"
-import { marked } from "marked"
+import { renderMarkdown } from "@/lib/markdown"
 import { serverApi } from "@/lib/api-server"
 import { Badge } from "@/components/ui/badge"
 import { PublicHeader } from "@/components/PublicHeader"
@@ -46,7 +46,7 @@ export async function generateMetadata({
   const title = article.metaTitle ?? article.title
   const description = article.metaDescription ?? article.excerpt ?? undefined
   const url = `${SITE_URL}/articles/${article.slug}`
-  const image = article.ogImage ?? `${SITE_URL}/logo-2000.png`
+  const image = article.ogImage ?? `${SITE_URL}/logo.png`
 
   return {
     title,
@@ -240,6 +240,7 @@ export default async function ArticlePage({
                 src={heroImage}
                 alt={article.title}
                 className="w-full object-cover max-h-120"
+                style={{ aspectRatio: "2/1" }}
               />
             </div>
 
@@ -263,7 +264,7 @@ export default async function ArticlePage({
                 prose-blockquote:border-l-2 prose-blockquote:border-neutral-300 dark:prose-blockquote:border-neutral-600 prose-blockquote:text-neutral-500 dark:prose-blockquote:text-neutral-400 prose-blockquote:not-italic prose-blockquote:pl-5
                 prose-code:bg-neutral-100 dark:prose-code:bg-neutral-800 prose-code:rounded prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
                 prose-pre:bg-neutral-950 prose-pre:text-neutral-100 prose-pre:border prose-pre:border-neutral-800 prose-pre:rounded-xl"
-              dangerouslySetInnerHTML={{ __html: await marked.parse(article.content) }}
+              dangerouslySetInnerHTML={{ __html: await renderMarkdown(article.content) }}
             />
 
             {/* Back link + share */}
