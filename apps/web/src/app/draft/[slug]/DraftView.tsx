@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useTransition } from "react"
+import { CoverImagePicker } from "@/components/admin/CoverImagePicker"
 import { useRouter } from "next/navigation"
 import NextLink from "next/link"
 import { marked } from "marked"
@@ -39,6 +40,7 @@ export function DraftView({ article }: DraftViewProps) {
   const [title, setTitle] = useState(article.title)
   const [excerpt, setExcerpt] = useState(article.excerpt ?? "")
   const [content, setContent] = useState(article.content)
+  const [coverImage, setCoverImage] = useState(article.ogImage)
 
   const handleSave = (): void => {
     startTransition(async () => {
@@ -70,7 +72,7 @@ export function DraftView({ article }: DraftViewProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Sticky top bar */}
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm" nativeButton={false} render={<NextLink href="/admin/articles" />}>
@@ -157,6 +159,23 @@ export function DraftView({ article }: DraftViewProps) {
 
       {/* Article content */}
       <main className="mx-auto max-w-3xl px-4 py-10">
+        {/* Cover image */}
+        <div className="relative rounded-xl overflow-hidden bg-muted mb-8 group">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={coverImage ?? `https://picsum.photos/seed/${article.id}/1200/500`}
+            alt="Cover"
+            className="w-full object-cover max-h-64"
+          />
+          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <CoverImagePicker
+              articleId={article.id}
+              currentImage={coverImage}
+              onUpdated={(url) => { setCoverImage(url); toast.success("Cover image updated") }}
+            />
+          </div>
+        </div>
+
         {/* Meta pills */}
         <div className="flex items-center gap-2 mb-6 flex-wrap">
           {article.category && <Badge variant="outline">{article.category.name}</Badge>}

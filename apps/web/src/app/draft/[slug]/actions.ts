@@ -16,6 +16,20 @@ export async function saveArticle(
   }
 }
 
+export async function updateCoverImage(
+  id: string,
+  ogImage: string | null
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    await serverApi.patch(`/articles/${id}`, { ogImage })
+    revalidatePath(`/draft/${id}`)
+    revalidatePath("/")
+    return { success: true }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : "Failed to update" }
+  }
+}
+
 export async function updateArticleStatus(
   id: string,
   status: "APPROVED" | "REJECTED" | "DRAFT"

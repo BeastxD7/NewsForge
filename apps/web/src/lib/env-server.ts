@@ -11,6 +11,7 @@ const envSchema = z.object({
   NEXTAUTH_SECRET: z.string().min(1),
   NEXTAUTH_URL: z.string().url().default("http://localhost:3000"),
   API_SECRET: z.string().min(1),
+  PEXELS_API_KEY: z.string().optional(),
 })
 
 const parsed = envSchema.safeParse({
@@ -18,6 +19,7 @@ const parsed = envSchema.safeParse({
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   API_SECRET: process.env.API_SECRET,
+  PEXELS_API_KEY: process.env.PEXELS_API_KEY,
 })
 
 if (!parsed.success) {

@@ -1,6 +1,7 @@
 "use client"
 
-import { useEditor, EditorContent } from "@tiptap/react"
+import { useRef } from "react"
+import { useEditor, EditorContent, NodeViewWrapper, ReactNodeViewRenderer, type NodeViewProps } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Image from "@tiptap/extension-image"
 import Link from "@tiptap/extension-link"
@@ -48,13 +49,100 @@ async function uploadImageFile(file: File): Promise<string | null> {
   }
 }
 
+function ResizableImageView({ node, updateAttributes, selected }: NodeViewProps) {
+  const startXRef = useRef<number>(0)
+  const startWidthRef = useRef<number>(0)
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>): void => {
+    e.preventDefault()
+    startXRef.current = e.clientX
+    const imgEl = e.currentTarget.parentElement?.querySelector("img") as HTMLImageElement | null
+    const attrs = node.attrs as { width: number | null }
+    startWidthRef.current = imgEl?.offsetWidth ?? attrs.width ?? 300
+
+    const onMouseMove = (moveEvent: MouseEvent): void => {
+      const newWidth = Math.max(80, startWidthRef.current + (moveEvent.clientX - startXRef.current))
+      updateAttributes({ width: newWidth })
+    }
+
+    const onMouseUp = (): void => {
+      document.removeEventListener("mousemove", onMouseMove)
+      document.removeEventListener("mouseup", onMouseUp)
+    }
+
+    document.addEventListener("mousemove", onMouseMove)
+    document.addEventListener("mouseup", onMouseUp)
+  }
+
+  const attrs = node.attrs as { src: string; alt?: string; title?: string; width: number | null }
+
+  return (
+    <NodeViewWrapper
+      style={{
+        display: "inline-block",
+        position: "relative",
+        maxWidth: "100%",
+        width: attrs.width ? `${attrs.width}px` : "auto",
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={attrs.src}
+        alt={attrs.alt ?? ""}
+        title={attrs.title ?? undefined}
+        draggable={false}
+        style={{ width: "100%", display: "block" }}
+      />
+      {selected && (
+        <div
+          onMouseDown={handleMouseDown}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            width: 14,
+            height: 14,
+            cursor: "nwse-resize",
+            background: "#3b82f6",
+            borderBottomRightRadius: 4,
+            zIndex: 10,
+          }}
+        />
+      )}
+    </NodeViewWrapper>
+  )
+}
+
+const ResizableImage = Image.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      width: {
+        default: null,
+        parseHTML: (element) => {
+          const w = element.getAttribute("width")
+          return w ? parseInt(w, 10) : null
+        },
+        renderHTML: (attributes: Record<string, unknown>) => {
+          if (!attributes.width) return {}
+          return { width: String(attributes.width) }
+        },
+      },
+    }
+  },
+
+  addNodeView() {
+    return ReactNodeViewRenderer(ResizableImageView)
+  },
+})
+
 export function ArticleEditor({ content, onChange }: ArticleEditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
         heading: { levels: [2, 3, 4] },
       }),
-      Image.configure({ inline: false, allowBase64: false }),
+      ResizableImage.configure({ inline: false, allowBase64: false }),
       Link.configure({ openOnClick: false, autolink: true }),
       Underline,
       Placeholder.configure({ placeholder: "Start writing your article..." }),
