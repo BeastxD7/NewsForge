@@ -78,13 +78,21 @@ function run(cmd: string, args: string[]): Promise<{ stdout: string; stderr: str
 
 // Python script that uses youtube-transcript-api (no JS runtime required).
 // Tries English first, falls back to any available language.
+// Supports proxy via YOUTUBE_PROXY_URL env var (needed on cloud VMs — Azure/AWS/GCP IPs are blocked by YouTube).
 const TRANSCRIPT_SCRIPT = String.raw`
-import sys, json
+import sys, json, os
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, TranscriptsDisabled
 
 video_id = sys.argv[1]
 
 try:
+    # If YOUTUBE_PROXY_URL is set, inject it as standard HTTP_PROXY/HTTPS_PROXY env vars.
+    # The requests library (used internally) respects these automatically.
+    proxy_url = os.environ.get("YOUTUBE_PROXY_URL")
+    if proxy_url:
+        os.environ["HTTP_PROXY"]  = proxy_url
+        os.environ["HTTPS_PROXY"] = proxy_url
+
     api = YouTubeTranscriptApi()
     tl  = api.list(video_id)
 
