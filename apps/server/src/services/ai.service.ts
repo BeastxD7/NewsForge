@@ -101,13 +101,17 @@ export const aiService = {
   async generateArticleFromTranscript(
     transcript: string,
     topicKeywords: string[],
-    videoMeta: { title: string; duration: number; channelName: string; url?: string }
+    videoMeta: { title: string; duration: number; channelName: string; url?: string; transcriptLanguage?: string }
   ): Promise<ArticleGenerationResult> {
     const config = await getActiveConfig()
     const videoRef = videoMeta.url
       ? `[${videoMeta.title}](${videoMeta.url})`
       : `"${videoMeta.title}"`
-    const prompt = `You are a journalist and content writer covering YouTube videos and podcasts. Your job is to extract all the key insights from a video and present them as a standalone article — so the reader gets the full value without watching.
+    const isNonEnglish = videoMeta.transcriptLanguage && !videoMeta.transcriptLanguage.startsWith("en")
+    const langNote = isNonEnglish
+      ? `\nNOTE: The transcript below is in "${videoMeta.transcriptLanguage}". Understand it fully and write the article in English.\n`
+      : ""
+    const prompt = `You are a journalist and content writer covering YouTube videos and podcasts. Your job is to extract all the key insights from a video and present them as a standalone article — so the reader gets the full value without watching.${langNote}
 
 VIDEO:
 Title: ${videoMeta.title}
@@ -359,7 +363,7 @@ Return ONLY a JSON object:
   async generateArticleFromSegment(
     transcript: string,
     segment: TranscriptSegment,
-    videoMeta: { title: string; duration: number; channelName: string; url: string },
+    videoMeta: { title: string; duration: number; channelName: string; url: string; transcriptLanguage?: string },
     topicKeywords: string[],
     contentMap: ChunkMeta[]
   ): Promise<ArticleGenerationResult> {
@@ -384,7 +388,11 @@ Return ONLY a JSON object:
     }
 
     const videoRef = `[${videoMeta.title}](${videoMeta.url})`
-    const prompt = `You are a journalist and content writer covering YouTube videos and podcasts. Your job is to extract all the key insights from a specific segment of a video and present them as a standalone article — so the reader gets the full value without watching.
+    const isNonEnglishSeg = videoMeta.transcriptLanguage && !videoMeta.transcriptLanguage.startsWith("en")
+    const langNoteSeg = isNonEnglishSeg
+      ? `\nNOTE: The transcript below is in "${videoMeta.transcriptLanguage}". Understand it fully and write the article in English.\n`
+      : ""
+    const prompt = `You are a journalist and content writer covering YouTube videos and podcasts. Your job is to extract all the key insights from a specific segment of a video and present them as a standalone article — so the reader gets the full value without watching.${langNoteSeg}
 
 VIDEO: ${videoMeta.title} by ${videoMeta.channelName}
 URL: ${videoMeta.url}

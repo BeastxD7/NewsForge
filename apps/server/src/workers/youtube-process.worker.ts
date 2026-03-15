@@ -106,9 +106,9 @@ async function processYoutubeVideo(job: Job<YoutubeProcessPayload>): Promise<voi
     console.log(`[youtube-process] Video: "${meta.title}" by ${meta.channelName}`)
 
     // 2. Fetch transcript
-    const { text: transcript, estimatedDurationSecs } = await fetchTranscript(videoId)
+    const { text: transcript, estimatedDurationSecs, language: transcriptLang } = await fetchTranscript(videoId)
     meta.duration = estimatedDurationSecs
-    console.log(`[youtube-process] Transcript: ${transcript.length} chars, ~${Math.round(estimatedDurationSecs / 60)} min`)
+    console.log(`[youtube-process] Transcript: ${transcript.length} chars, ~${Math.round(estimatedDurationSecs / 60)} min, lang=${transcriptLang}`)
 
     // 3. Get topic keywords if topicId is provided
     let topicKeywords: string[] = []
@@ -136,7 +136,7 @@ async function processYoutubeVideo(job: Job<YoutubeProcessPayload>): Promise<voi
         const result = await aiService.generateArticleFromSegment(
           transcript,
           segment,
-          { ...meta, url: videoUrl },
+          { ...meta, url: videoUrl, transcriptLanguage: transcriptLang },
           topicKeywords,
           splitAnalysis.contentMap
         )
@@ -184,7 +184,7 @@ async function processYoutubeVideo(job: Job<YoutubeProcessPayload>): Promise<voi
     } else {
       // Short video below split threshold — single article from full transcript
       console.log(`[youtube-process] Generating single article (below split threshold)`)
-      const result = await aiService.generateArticleFromTranscript(transcript, topicKeywords, { ...meta, url: videoUrl })
+      const result = await aiService.generateArticleFromTranscript(transcript, topicKeywords, { ...meta, url: videoUrl, transcriptLanguage: transcriptLang })
       console.log(`[youtube-process] AI generated article: "${result.title}"`)
 
       const coverImage = await imageService.fetchCoverImage(
