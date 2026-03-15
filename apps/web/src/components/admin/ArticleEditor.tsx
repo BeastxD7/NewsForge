@@ -23,11 +23,29 @@ import {
   Redo,
   Minus,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 
 interface ArticleEditorProps {
   content: string // Markdown format
   onChange: (markdown: string) => void // Returns Markdown
+}
+
+async function uploadImageFile(file: File): Promise<string | null> {
+  const formData = new FormData()
+  formData.append("image", file)
+
+  try {
+    const res = await fetch("/api/admin/upload", { method: "POST", body: formData })
+    const json = await res.json() as { success: boolean; data?: { url: string }; message?: string }
+    if (!json.success) {
+      toast.error(json.message ?? "Image upload failed")
+      return null
+    }
+    return json.data?.url ?? null
+  } catch {
+    toast.error("Upload failed — is the server running?")
+    return null
+  }
 }
 
 export function ArticleEditor({ content, onChange }: ArticleEditorProps) {
@@ -41,9 +59,9 @@ export function ArticleEditor({ content, onChange }: ArticleEditorProps) {
       Underline,
       Placeholder.configure({ placeholder: "Start writing your article..." }),
       Markdown.configure({
-        html: true, // Allow HTML in Markdown
-        transformPastedText: true, // Convert pasted HTML to Markdown
-        transformCopiedText: true, // Convert copied content to Markdown
+        html: true,
+        transformPastedText: true,
+        transformCopiedText: true,
       }),
     ],
     content,
@@ -55,35 +73,60 @@ export function ArticleEditor({ content, onChange }: ArticleEditorProps) {
       attributes: {
         class: "prose prose-lg prose-neutral dark:prose-invert max-w-none focus:outline-none min-h-[400px] px-1",
       },
+      // Handle paste: intercept image files and upload them
+      handlePaste(view, event) {
+        const items = Array.from(event.clipboardData?.items ?? [])
+        const imageItem = items.find((item) => item.type.startsWith("image/"))
+        if (!imageItem) return false
+
+        event.preventDefault()
+        const file = imageItem.getAsFile()
+        if (!file) return true
+
+        void uploadImageFile(file).then((url) => {
+          if (url) {
+            view.dispatch(
+              view.state.tr.replaceSelectionWith(
+                view.state.schema.nodes.image!.create({ src: url })
+              )
+            )
+          }
+        })
+        return true
+      },
+      // Handle drop: drag image files from desktop into editor
+      handleDrop(view, event) {
+        const files = Array.from(event.dataTransfer?.files ?? [])
+        const imageFile = files.find((f) => f.type.startsWith("image/"))
+        if (!imageFile) return false
+
+        event.preventDefault()
+        const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
+
+        void uploadImageFile(imageFile).then((url) => {
+          if (url) {
+            const node = view.state.schema.nodes.image!.create({ src: url })
+            const transaction = view.state.tr.insert(coordinates?.pos ?? view.state.selection.from, node)
+            view.dispatch(transaction)
+          }
+        })
+        return true
+      },
     },
     immediatelyRender: false,
   })
 
   if (!editor) return null
 
-  const addImage = async (): Promise<void> => {
+  const addImage = (): void => {
     const input = document.createElement("input")
     input.type = "file"
     input.accept = "image/*"
     input.onchange = async () => {
       const file = input.files?.[0]
       if (!file) return
-
-      const formData = new FormData()
-      formData.append("image", file)
-
-      try {
-        const res = await fetch("/api/admin/upload", {
-          method: "POST",
-          body: formData,
-        })
-        const json = await res.json() as { success: boolean; data: { url: string } }
-        if (json.success) {
-          editor.chain().focus().setImage({ src: json.data.url }).run()
-        }
-      } catch {
-        // upload failed silently
-      }
+      const url = await uploadImageFile(file)
+      if (url) editor.chain().focus().setImage({ src: url }).run()
     }
     input.click()
   }
@@ -205,7 +248,7 @@ export function ArticleEditor({ content, onChange }: ArticleEditorProps) {
         <ToolbarButton onClick={setLink} active={editor.isActive("link")} title="Link">
           <LinkIcon className="size-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={addImage} title="Insert Image">
+        <ToolbarButton onClick={addImage} title="Insert Image (or paste/drop)">
           <ImagePlus className="size-4" />
         </ToolbarButton>
 
