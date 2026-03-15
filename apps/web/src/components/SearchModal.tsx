@@ -180,7 +180,7 @@ export function SearchModal() {
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={articleThumb(article.id, article.ogImage)}
-                          alt=""
+                          alt={article.title}
                           className="size-12 rounded-lg object-cover shrink-0 mt-0.5"
                         />
                         {/* Text */}

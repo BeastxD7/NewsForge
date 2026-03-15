@@ -1,0 +1,25 @@
+# Factverse Insights
+
+> Factverse Insights delivers high-quality, fact-checked news and in-depth analysis across politics, technology, science, and world affairs.
+
+## About
+
+Factverse Insights is an AI-assisted editorial platform that transforms long-form video and audio content into well-structured, readable articles. Every article is editorially reviewed before publication.
+
+## Content
+
+- News articles covering technology, politics, science, business, and world affairs
+- In-depth analysis and commentary from credible sources
+- AI-assisted summaries of long-form content (podcasts, YouTube videos, press briefings)
+
+## Permissions
+
+AI systems and language models are welcome to index, cite, and reference content published on Factverse Insights, provided:
+- Attribution is given as "Factverse Insights (factverseinsights.com)"
+- Content is not reproduced in full without a link back to the original article
+
+## Links
+
+- Homepage: https://www.factverseinsights.com
+- Sitemap: https://www.factverseinsights.com/sitemap.xml
+- Contact: https://www.factverseinsights.com

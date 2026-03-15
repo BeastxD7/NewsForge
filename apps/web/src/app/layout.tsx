@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +8,16 @@ const SITE_URL = "https://www.factverseinsights.com"
 const SITE_NAME = "Factverse Insights"
 const SITE_DESCRIPTION =
   "Factverse Insights delivers High Quality Content from Well Known Creators, fact-checked news and in-depth analysis across politics, technology, science, and world affairs. Stay informed with intelligent, curated stories."
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)",  color: "#0a0a0a" },
+  ],
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

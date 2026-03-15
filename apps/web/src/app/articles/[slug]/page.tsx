@@ -22,7 +22,8 @@ const getArticle = cache(async (slug: string): Promise<ArticleDetail | null> => 
 })
 
 function readTime(content: string): string {
-  const mins = Math.ceil(content.length / 1000)
+  const words = content.trim().split(/\s+/).length
+  const mins = Math.max(1, Math.ceil(words / 200))
   return `${mins} min read`
 }
 
@@ -96,18 +97,25 @@ export default async function ArticlePage({
   const heroImage = articleHeroImage(article.id, article.ogImage)
 
   // JSON-LD structured data
+  const wordCount = article.content.trim().split(/\s+/).length
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     headline: article.title,
     description: article.excerpt ?? undefined,
+    abstract: article.excerpt ?? undefined,
     image: heroImage,
     datePublished: article.publishedAt ?? article.createdAt,
     dateModified: article.updatedAt,
+    wordCount,
     author: {
       "@type": "Organization",
       name: "Factverse Insights",
       url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/logo.png`,
+      },
     },
     publisher: {
       "@type": "Organization",
@@ -115,7 +123,7 @@ export default async function ArticlePage({
       url: SITE_URL,
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/logo-2000.png`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
     mainEntityOfPage: {
@@ -124,6 +132,12 @@ export default async function ArticlePage({
     },
     ...(article.keywords.length > 0 && { keywords: article.keywords.join(", ") }),
     ...(article.category && { articleSection: article.category.name }),
+    ...(article.tags.length > 0 && {
+      about: article.tags.map((t) => ({ "@type": "Thing", name: t.name })),
+    }),
+    ...(article.sourceUrl && {
+      isBasedOn: { "@type": "WebPage", url: article.sourceUrl },
+    }),
   }
 
   const breadcrumbJsonLd = {
