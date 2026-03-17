@@ -9,12 +9,13 @@ interface IngestResult {
   status: string
 }
 
-interface JobStatus {
+export interface JobStatus {
   id: string
   type: string
   status: "PENDING" | "RUNNING" | "COMPLETED" | "FAILED" | "CANCELLED"
   errorMessage: string | null
   result: JobResult
+  payload?: unknown
   createdAt: string
   completedAt: string | null
 }
@@ -42,5 +43,14 @@ export async function getJobStatus(
     return { success: true, data }
   } catch (err) {
     return { success: false, error: err instanceof Error ? err.message : "Failed to fetch status" }
+  }
+}
+
+export async function getRecentYoutubeJobs(): Promise<JobStatus[]> {
+  try {
+    const data = await serverApi.get<JobStatus[]>("/admin/jobs?type=YOUTUBE_PROCESS&pageSize=20")
+    return Array.isArray(data) ? data : []
+  } catch {
+    return []
   }
 }

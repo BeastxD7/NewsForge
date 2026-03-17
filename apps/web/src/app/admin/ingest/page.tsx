@@ -1,6 +1,9 @@
 import { IngestForm } from "@/components/admin/IngestForm"
+import { getRecentYoutubeJobs } from "./actions"
 
-export default function IngestPage() {
+export default async function IngestPage() {
+  const initialJobs = await getRecentYoutubeJobs()
+
   return (
     <div className="space-y-6">
       <div>
@@ -11,7 +14,7 @@ export default function IngestPage() {
       </div>
 
       <div className="max-w-xl">
-        <IngestForm />
+        <IngestForm initialJobs={initialJobs} />
       </div>
     </div>
   )

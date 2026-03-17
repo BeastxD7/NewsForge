@@ -8,11 +8,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ingestYoutubeUrl, getJobStatus } from "@/app/admin/ingest/actions"
 import { isMultiArticleResult } from "@/app/admin/ingest/types"
+import type { JobStatus } from "@/app/admin/ingest/actions"
 
 interface JobState {
   jobRunId: string
   status: "PENDING" | "RUNNING" | "COMPLETED" | "FAILED" | "CANCELLED"
   errorMessage?: string | null
+  createdAt?: string
+  videoId?: string
   // single article
   articleTitle?: string
   // smart split
@@ -28,10 +31,34 @@ const statusConfig = {
   CANCELLED: { icon: XCircle, label: "Cancelled", color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400" },
 }
 
-export function IngestForm() {
+function toJobState(j: JobStatus): JobState {
+  const result = j.result
+  let articleTitle: string | undefined
+  let articleCount: number | undefined
+  let articleTitles: string[] | undefined
+  if (isMultiArticleResult(result)) {
+    articleCount = result.articleCount
+    articleTitles = result.articles.map((a) => a.title)
+  } else if (result) {
+    articleTitle = result.articleTitle
+  }
+  const payload = j.payload as { videoId?: string } | undefined
+  return {
+    jobRunId: j.id,
+    status: j.status,
+    errorMessage: j.errorMessage,
+    createdAt: j.createdAt,
+    videoId: payload?.videoId,
+    articleTitle,
+    articleCount,
+    articleTitles,
+  }
+}
+
+export function IngestForm({ initialJobs = [] }: { initialJobs?: JobStatus[] }) {
   const [url, setUrl] = useState("")
   const [isPending, startTransition] = useTransition()
-  const [jobs, setJobs] = useState<JobState[]>([])
+  const [jobs, setJobs] = useState<JobState[]>(() => initialJobs.map(toJobState))
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const pollJobs = useCallback((): void => {
@@ -110,7 +137,7 @@ export function IngestForm() {
     }
   }, [jobs, pollJobs])
 
-  const handleSubmit = (e: React.FormEvent): void => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>): void => {
     e.preventDefault()
     if (!url.trim()) return
 
@@ -235,6 +262,11 @@ export function IngestForm() {
                           {job.articleTitle ?? (isActive ? "Processing video..." : `Job ${job.jobRunId.slice(-8)}`)}
                         </p>
                       )}
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {job.videoId && <span className="font-mono">{job.videoId}</span>}
+                        {job.videoId && job.createdAt && " · "}
+                        {job.createdAt && new Date(job.createdAt).toLocaleString()}
+                      </p>
                       {job.status === "FAILED" && job.errorMessage && (
                         <p className="text-xs text-destructive truncate mt-0.5">
                           {job.errorMessage}
