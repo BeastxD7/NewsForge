@@ -46,11 +46,35 @@ export async function getJobStatus(
   }
 }
 
-export async function getRecentYoutubeJobs(): Promise<JobStatus[]> {
+export interface JobsPage {
+  items: JobStatus[]
+  total: number
+  page: number
+  pageSize: number
+  totalPages: number
+}
+
+export async function getYoutubeJobs(
+  page = 1,
+  status?: string,
+  pageSize = 10
+): Promise<JobsPage> {
   try {
-    const data = await serverApi.get<JobStatus[]>("/admin/jobs?type=YOUTUBE_PROCESS&pageSize=20")
-    return Array.isArray(data) ? data : []
+    const params = new URLSearchParams({
+      type: "YOUTUBE_PROCESS",
+      page: String(page),
+      pageSize: String(pageSize),
+      ...(status && status !== "ALL" && { status }),
+    })
+    const res = await serverApi.getRaw(`/admin/jobs?${params}`)
+    return {
+      items: Array.isArray(res.data) ? res.data : [],
+      total: res.total ?? 0,
+      page: res.page ?? page,
+      pageSize: res.pageSize ?? pageSize,
+      totalPages: res.totalPages ?? 1,
+    }
   } catch {
-    return []
+    return { items: [], total: 0, page: 1, pageSize, totalPages: 1 }
   }
 }

@@ -27,8 +27,25 @@ async function serverRequest<T>(path: string, options: RequestInit = {}): Promis
   return json.data
 }
 
+async function serverRequestRaw(path: string, options: RequestInit = {}): Promise<Record<string, unknown>> {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${serverEnv.API_SECRET}`,
+    ...(options.headers as Record<string, string>),
+  }
+  const res = await fetch(`${serverEnv.NEXT_PUBLIC_API_URL}/api/v1${path}`, {
+    ...options,
+    headers,
+    cache: "no-store",
+  })
+  const json = await res.json() as Record<string, unknown>
+  if (!json["success"]) throw new Error(String(json["message"] ?? "Request failed"))
+  return json
+}
+
 export const serverApi = {
   get: <T>(path: string) => serverRequest<T>(path, { method: "GET" }),
+  getRaw: (path: string) => serverRequestRaw(path, { method: "GET" }),
 
   post: <T>(path: string, body: unknown) =>
     serverRequest<T>(path, { method: "POST", body: JSON.stringify(body) }),

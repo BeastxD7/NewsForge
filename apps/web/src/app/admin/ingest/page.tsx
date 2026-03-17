@@ -1,8 +1,9 @@
 import { IngestForm } from "@/components/admin/IngestForm"
-import { getRecentYoutubeJobs } from "./actions"
+import { JobsHistory } from "@/components/admin/JobsHistory"
+import { getYoutubeJobs } from "./actions"
 
 export default async function IngestPage() {
-  const initialJobs = await getRecentYoutubeJobs()
+  const initialPage = await getYoutubeJobs(1, "ALL")
 
   return (
     <div className="space-y-6">
@@ -14,7 +15,11 @@ export default async function IngestPage() {
       </div>
 
       <div className="max-w-xl">
-        <IngestForm initialJobs={initialJobs} />
+        <IngestForm />
+      </div>
+
+      <div className="max-w-3xl">
+        <JobsHistory initialPage={initialPage} />
       </div>
     </div>
   )
