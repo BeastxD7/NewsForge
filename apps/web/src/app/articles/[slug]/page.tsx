@@ -244,7 +244,7 @@ export default async function ArticlePage({
             </nav>
 
             {/* Title */}
-            <h1 className="text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-neutral-900 dark:text-neutral-50 mb-5">
+            <h1 className="text-3xl sm:text-4xl font-bold leading-[1.15] tracking-tight text-neutral-900 dark:text-neutral-50 mb-5" style={{ fontFamily: "'Lora', Georgia, serif" }}>
               {article.title}
             </h1>
 
@@ -296,7 +296,7 @@ export default async function ArticlePage({
 
             {/* Excerpt as lead paragraph */}
             {article.excerpt && (
-              <p className="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8 font-medium">
+              <p className="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8 font-medium" style={{ fontFamily: "'Lora', Georgia, serif" }}>
                 {article.excerpt}
               </p>
             )}
