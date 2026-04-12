@@ -25,7 +25,8 @@ const navItems = [
 ]
 
 export function AppSidebar() {
-  const pathname = usePathname()
+  // usePathname() is client-only — suppress isActive on SSR to prevent hydration mismatch
+  const pathname = usePathname() ?? ""
 
   return (
     <Sidebar>
@@ -48,7 +49,8 @@ export function AppSidebar() {
           </p>
           <SidebarMenu>
             {navItems.map(({ href, label, icon: Icon, exact }) => {
-              const isActive = exact ? pathname === href : pathname.startsWith(href)
+              // Only compute isActive on the client (pathname is "" during SSR)
+              const isActive = pathname ? (exact ? pathname === href : pathname.startsWith(href)) : false
               return (
                 <SidebarMenuItem key={href}>
                   <SidebarMenuButton
