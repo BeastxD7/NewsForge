@@ -78,8 +78,11 @@ const sections = [
     title: "5. Accuracy",
     content: (
       <p>
-        We make reasonable efforts to ensure accuracy. If you spot an error, report it via the
-        About page and we will review it promptly.
+        We make reasonable efforts to ensure accuracy. If you spot an error, email{" "}
+        <a href="mailto:beast.steam002@gmail.com" className="text-primary hover:underline">
+          beast.steam002@gmail.com
+        </a>{" "}
+        and we will review it promptly.
       </p>
     ),
   },

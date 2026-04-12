@@ -37,6 +37,11 @@ const aboutJsonLd = {
       width: 500,
       height: 500,
     },
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "beast.steam002@gmail.com",
+      contactType: "customer support",
+    },
   },
 }
 
@@ -206,6 +211,25 @@ export default function AboutPage() {
                 topics that deserve deeper exploration than a tweet or breaking headline can offer —
                 stories where context and analysis make all the difference.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Contact ── */}
+        <section className="max-w-3xl mx-auto px-6 py-16 border-t border-border/60">
+          <div className="grid sm:grid-cols-[1fr_2fr] gap-10 items-start">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Contact</p>
+              <h2 className="text-2xl font-bold tracking-tight leading-snug">Get in touch</h2>
+            </div>
+            <div className="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-4">
+              <p>Have a question, feedback, or a content suggestion?</p>
+              <a
+                href="mailto:beast.steam002@gmail.com"
+                className="inline-block font-semibold text-primary hover:underline"
+              >
+                beast.steam002@gmail.com
+              </a>
             </div>
           </div>
         </section>

@@ -102,7 +102,11 @@ const sections = [
       <p>
         Depending on your location, you may have the right to access, correct, or delete personal
         data we hold. We will make reasonable efforts to action such requests within 30 days.
-        Contact us via the About page.
+        Email us at{" "}
+        <a href="mailto:beast.steam002@gmail.com" className="text-primary hover:underline">
+          beast.steam002@gmail.com
+        </a>
+        .
       </p>
     ),
   },
@@ -131,8 +135,10 @@ const sections = [
     content: (
       <p>
         We use HTTPS, bcrypt password hashing, and industry-standard database security. No
-        system is perfectly secure — if you discover a vulnerability, please report it via our
-        About page.
+        system is perfectly secure — if you discover a vulnerability, email us at{" "}
+        <a href="mailto:beast.steam002@gmail.com" className="text-primary hover:underline">
+          beast.steam002@gmail.com
+        </a>.
       </p>
     ),
   },
