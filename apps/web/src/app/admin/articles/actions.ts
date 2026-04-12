@@ -11,6 +11,10 @@ export async function updateArticleStatus(
   try {
     await serverApi.patch<ArticleListItem>(`/articles/${id}`, { status })
     revalidatePath("/admin/articles")
+    // Rebuild sitemap + public pages immediately when article is published or unpublished
+    revalidatePath("/sitemap.xml")
+    revalidatePath("/")
+    revalidatePath("/articles")
     return { success: true }
   } catch (err) {
     return { success: false, error: err instanceof Error ? err.message : "Failed to update" }

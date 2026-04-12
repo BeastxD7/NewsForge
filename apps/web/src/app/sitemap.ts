@@ -4,8 +4,8 @@ import type { ArticleListItem } from "@news-app/types"
 
 const SITE_URL = "https://www.factverseinsight.com"
 
-// Regenerate the sitemap at most once per hour so new articles appear quickly
-export const revalidate = 3600
+// Fallback revalidation every 5 min — on-demand revalidation fires immediately on article publish
+export const revalidate = 300
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = Date.now()
