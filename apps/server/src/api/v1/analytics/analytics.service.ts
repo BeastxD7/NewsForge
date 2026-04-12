@@ -1,7 +1,9 @@
 import { prisma } from "../../../lib/prisma"
-import { env } from "../../../config/env"
 
-// ── Geo lookup via ipinfo.io ──────────────────────────────────────────────────
+// ── Geo lookup — no API key required ─────────────────────────────────────────
+// Primary:   ip-api.com  (free, no key, 45 req/min)
+// Fallback:  ipapi.co    (free, no key, 1000 req/day)
+// Final:     skip geo silently — never crashes the tracker
 
 interface IpInfo {
   country?: string
@@ -9,22 +11,51 @@ interface IpInfo {
   city?: string
 }
 
+function isPrivateIp(ip: string): boolean {
+  return (
+    !ip ||
+    ip === "127.0.0.1" ||
+    ip === "::1" ||
+    ip.startsWith("192.168.") ||
+    ip.startsWith("10.") ||
+    ip.startsWith("172.16.") ||
+    ip === "unknown"
+  )
+}
+
 async function getGeo(ip: string): Promise<IpInfo> {
-  if (!ip || ip === "127.0.0.1" || ip === "::1" || ip.startsWith("192.168") || ip.startsWith("10.")) {
-    return { country: "Local", region: "Local", city: "Local" }
-  }
+  if (isPrivateIp(ip)) return { country: "Local", region: "Local", city: "Local" }
+
+  // Primary: ip-api.com — completely free, no key, batch-friendly
   try {
-    const token = env.IPINFO_TOKEN
-    const url = token
-      ? `https://ipinfo.io/${ip}/json?token=${token}`
-      : `https://ipinfo.io/${ip}/json`
-    const res = await fetch(url, { signal: AbortSignal.timeout(3000) })
-    if (!res.ok) return {}
-    const data = await res.json() as Record<string, string>
-    return { country: data["country"], region: data["region"], city: data["city"] }
-  } catch {
-    return {}
-  }
+    const res = await fetch(
+      `http://ip-api.com/json/${ip}?fields=status,country,regionName,city`,
+      { signal: AbortSignal.timeout(3000) }
+    )
+    if (res.ok) {
+      const d = await res.json() as Record<string, string>
+      if (d["status"] === "success") {
+        return { country: d["country"], region: d["regionName"], city: d["city"] }
+      }
+    }
+  } catch { /* fall through */ }
+
+  // Fallback: ipapi.co — free, no key, 1000/day
+  try {
+    const res = await fetch(
+      `https://ipapi.co/${ip}/json/`,
+      { signal: AbortSignal.timeout(3000) }
+    )
+    if (res.ok) {
+      const d = await res.json() as Record<string, string>
+      if (!d["error"]) {
+        return { country: d["country_name"], region: d["region"], city: d["city"] }
+      }
+    }
+  } catch { /* fall through */ }
+
+  // If both fail, just skip geo — never block the tracker
+  return {}
 }
 
 // ── User-Agent parsing (no external dep) ────────────────────────────────────

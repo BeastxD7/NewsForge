@@ -34,8 +34,6 @@ const envSchema = z.object({
   // Image API — used to auto-fetch cover images during article generation
   PEXELS_API_KEY: z.string().optional(),
 
-  // Analytics geo lookup — ipinfo.io (free: 50k req/month, optional)
-  IPINFO_TOKEN: z.string().optional(),
 })
 
 const parsed = envSchema.safeParse(process.env)
