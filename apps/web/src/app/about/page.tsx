@@ -36,12 +36,6 @@ const aboutJsonLd = {
       width: 500,
       height: 500,
     },
-    sameAs: ["https://twitter.com/factverseinsights"],
-    contactPoint: {
-      "@type": "ContactPoint",
-      email: "hello@factverseinsight.com",
-      contactType: "customer support",
-    },
   },
 }
 
@@ -127,29 +121,6 @@ export default function AboutPage() {
             </p>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">Contact Us</h2>
-            <p>
-              Have a question, feedback, or a content suggestion? We&rsquo;d love to hear from you.
-              Reach us at{" "}
-              <a
-                href="mailto:hello@factverseinsight.com"
-                className="text-primary hover:underline font-medium"
-              >
-                hello@factverseinsight.com
-              </a>{" "}
-              or follow us on{" "}
-              <a
-                href="https://twitter.com/factverseinsights"
-                className="text-primary hover:underline font-medium"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                X (Twitter)
-              </a>
-              .
-            </p>
-          </section>
         </div>
 
         <div className="mt-16 pt-8 border-t border-border">

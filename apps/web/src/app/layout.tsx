@@ -70,8 +70,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@factverseinsights",
-    creator: "@factverseinsights",
     title: `${SITE_NAME} | Insights, News & Analysis`,
     description: SITE_DESCRIPTION,
     images: [`${SITE_URL}/logo.png`],
@@ -106,9 +104,6 @@ const websiteJsonLd = {
       width: 500,
       height: 500,
     },
-    sameAs: [
-      "https://twitter.com/factverseinsights",
-    ],
   },
   potentialAction: {
     "@type": "SearchAction",

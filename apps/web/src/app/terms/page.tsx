@@ -80,14 +80,8 @@ export default function TermsPage() {
           <Section title="5. Accuracy and Corrections">
             <p>
               We make reasonable efforts to ensure articles are accurate and up to date. If you
-              spot an error or inaccuracy, please contact us at{" "}
-              <a
-                href="mailto:hello@factverseinsight.com"
-                className="text-primary hover:underline"
-              >
-                hello@factverseinsight.com
-              </a>{" "}
-              and we will review and correct it promptly.
+              spot an error or inaccuracy, please let us know via the About page and we will
+              review and correct it promptly.
             </p>
           </Section>
 
@@ -119,19 +113,6 @@ export default function TermsPage() {
             <p>
               These Terms are governed by applicable laws. Any disputes will be resolved in
               accordance with those laws.
-            </p>
-          </Section>
-
-          <Section title="10. Contact">
-            <p>
-              Questions about these Terms? Email us at{" "}
-              <a
-                href="mailto:hello@factverseinsight.com"
-                className="text-primary hover:underline font-medium"
-              >
-                hello@factverseinsight.com
-              </a>
-              .
             </p>
           </Section>
         </div>

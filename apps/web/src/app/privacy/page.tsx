@@ -70,7 +70,6 @@ export default function PrivacyPage() {
               <li>Authenticate admin users and keep sessions secure</li>
               <li>Monitor and protect the security of the site</li>
               <li>Improve site performance and diagnose technical issues</li>
-              <li>Respond to enquiries sent to us directly by email</li>
             </ul>
             <p>We do not use your data for advertising or sell it to third parties.</p>
           </Section>
@@ -95,22 +94,15 @@ export default function PrivacyPage() {
           <Section title="5. Data Retention">
             <p>
               Server logs are retained for up to 30 days. Admin account data is retained for as
-              long as the account is active. You may request deletion of your account at any time
-              by contacting us.
+              long as the account is active.
             </p>
           </Section>
 
           <Section title="6. Your Rights">
             <p>
               Depending on your location, you may have the right to access, correct, or delete
-              personal data we hold about you. To exercise any of these rights, contact us at{" "}
-              <a
-                href="mailto:hello@factverseinsight.com"
-                className="text-primary hover:underline"
-              >
-                hello@factverseinsight.com
-              </a>
-              . We will respond within 30 days.
+              personal data we hold about you. We will make reasonable efforts to respond to such
+              requests within 30 days.
             </p>
           </Section>
 
@@ -133,15 +125,8 @@ export default function PrivacyPage() {
           <Section title="8. Security">
             <p>
               We use HTTPS, hashed passwords (bcrypt), and industry-standard database security
-              practices. No system is perfectly secure; if you discover a vulnerability, please
-              report it to{" "}
-              <a
-                href="mailto:hello@factverseinsight.com"
-                className="text-primary hover:underline"
-              >
-                hello@factverseinsight.com
-              </a>
-              .
+              practices. No system is perfectly secure — if you discover a vulnerability, please
+              report it via the About page.
             </p>
           </Section>
 
@@ -150,19 +135,6 @@ export default function PrivacyPage() {
               We may update this policy from time to time. When we do, we will update the effective
               date at the top of this page. Continued use of the site after changes constitutes
               acceptance of the revised policy.
-            </p>
-          </Section>
-
-          <Section title="10. Contact">
-            <p>
-              Questions about this policy? Email us at{" "}
-              <a
-                href="mailto:hello@factverseinsight.com"
-                className="text-primary hover:underline font-medium"
-              >
-                hello@factverseinsight.com
-              </a>
-              .
             </p>
           </Section>
         </div>
