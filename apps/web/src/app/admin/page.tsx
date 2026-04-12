@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { FileText, Settings } from "lucide-react"
+import { BarChart2, FileText, Settings } from "lucide-react"
 import { serverApi } from "@/lib/api-server"
 import { StatsCards } from "@/components/admin/StatsCards"
 import { Button } from "@/components/ui/button"

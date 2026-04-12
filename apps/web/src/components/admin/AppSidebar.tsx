@@ -1,7 +1,6 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { signOut } from "next-auth/react"
 import { LayoutDashboard, FileText, Settings, LogOut, ExternalLink, Upload, BarChart2 } from "lucide-react"
 import {
@@ -27,6 +26,7 @@ const navItems = [
 export function AppSidebar() {
   // usePathname() is client-only — suppress isActive on SSR to prevent hydration mismatch
   const pathname = usePathname() ?? ""
+  const router = useRouter()
 
   return (
     <Sidebar>
@@ -54,7 +54,7 @@ export function AppSidebar() {
               return (
                 <SidebarMenuItem key={href}>
                   <SidebarMenuButton
-                    render={<Link href={href} />}
+                    onClick={() => router.push(href)}
                     isActive={isActive}
                     className={cn(
                       "rounded-lg mx-1 transition-all",
@@ -77,7 +77,7 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              render={<Link href="/" target="_blank" />}
+              onClick={() => window.open("/", "_blank", "noopener,noreferrer")}
               className="rounded-lg mx-1 text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-all"
             >
               <ExternalLink className="size-4" />
