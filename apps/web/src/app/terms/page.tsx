@@ -13,111 +13,143 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="space-y-3">
-      <h2 className="text-lg font-bold text-foreground">{title}</h2>
-      <div className="text-neutral-700 dark:text-neutral-300 leading-relaxed space-y-3">{children}</div>
-    </section>
-  )
-}
+const sections = [
+  {
+    title: "1. Acceptance",
+    content: (
+      <p>
+        By accessing or using Factverse Insights (&ldquo;the Site&rdquo;), you agree to be bound
+        by these Terms of Service. If you do not agree, please do not use the Site.
+      </p>
+    ),
+  },
+  {
+    title: "2. AI Content Disclosure",
+    content: (
+      <div className="space-y-3">
+        <p>
+          Articles are produced with the assistance of AI (Anthropic&rsquo;s Claude). Every article
+          is based on a real source and reviewed before publication, but AI-generated content may
+          contain errors, omissions, or oversimplifications.
+        </p>
+        <div className="rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 px-5 py-4">
+          <p className="text-sm font-semibold text-amber-900 dark:text-amber-300 leading-relaxed">
+            Content on this site is for informational purposes only. It does not constitute
+            professional advice — legal, financial, medical, or otherwise. Always consult a
+            qualified professional before acting on information read here.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "3. Permitted Use",
+    content: (
+      <div className="space-y-3">
+        <p>You may read, share, and link to articles for personal, non-commercial purposes.</p>
+        <p>You may <strong className="text-foreground">not</strong>:</p>
+        <ul className="space-y-2 pl-1">
+          {[
+            "Reproduce or republish articles in bulk without written permission",
+            "Scrape the Site at a scale that degrades performance for other users",
+            "Use Site content to train a competing AI product without permission",
+            "Attempt to access the admin area without authorisation",
+          ].map((item) => (
+            <li key={item} className="flex gap-3 items-start">
+              <span className="mt-2 size-1.5 rounded-full bg-destructive/70 shrink-0" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ),
+  },
+  {
+    title: "4. Intellectual Property",
+    content: (
+      <p>
+        Articles, design, logo, and all other content are owned by or licensed to us. Original
+        source material (videos, news articles) remains property of its respective copyright
+        holders. Our articles are derivative works created for commentary and editorial reporting.
+      </p>
+    ),
+  },
+  {
+    title: "5. Accuracy",
+    content: (
+      <p>
+        We make reasonable efforts to ensure accuracy. If you spot an error, report it via the
+        About page and we will review it promptly.
+      </p>
+    ),
+  },
+  {
+    title: "6. Limitation of Liability",
+    content: (
+      <p>
+        To the maximum extent permitted by applicable law, Factverse Insights is not liable for
+        any direct, indirect, incidental, or consequential damages arising from your use of the
+        Site or reliance on any content published here.
+      </p>
+    ),
+  },
+  {
+    title: "7. External Links",
+    content: (
+      <p>
+        Articles may link to external sites (e.g., YouTube, news sources). We are not responsible
+        for their content, privacy practices, or accuracy. Links are provided for reference only.
+      </p>
+    ),
+  },
+  {
+    title: "8. Modifications",
+    content: (
+      <p>
+        We may update these Terms at any time. Changes take effect when posted with an updated
+        effective date. Continued use of the Site constitutes acceptance.
+      </p>
+    ),
+  },
+  {
+    title: "9. Governing Law",
+    content: (
+      <p>
+        These Terms are governed by applicable laws. Disputes will be resolved in accordance with
+        those laws.
+      </p>
+    ),
+  },
+]
 
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-background">
       <PublicHeader />
 
-      <main className="max-w-3xl mx-auto px-6 py-16">
-        <h1 className="text-4xl font-black tracking-tight mb-2">Terms of Service</h1>
-        <p className="text-sm text-neutral-500 mb-14">Effective date: {EFFECTIVE_DATE}</p>
+      <main>
+        {/* ── Hero ── */}
+        <section className="border-b border-border/60 bg-neutral-50 dark:bg-neutral-900/40">
+          <div className="max-w-3xl mx-auto px-6 py-16">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">Legal</p>
+            <h1 className="text-4xl font-black tracking-tight text-foreground mb-3">Terms of Service</h1>
+            <p className="text-sm text-neutral-500">Effective date: {EFFECTIVE_DATE}</p>
+          </div>
+        </section>
 
-        <div className="space-y-10">
-          <Section title="1. Acceptance of Terms">
-            <p>
-              By accessing or using Factverse Insights (&ldquo;the Site&rdquo;, &ldquo;we&rdquo;,
-              &ldquo;us&rdquo;), you agree to be bound by these Terms of Service. If you do not
-              agree, please do not use the Site.
-            </p>
-          </Section>
-
-          <Section title="2. AI-Generated Content Disclosure">
-            <p>
-              Articles published on Factverse Insights are produced with the assistance of
-              artificial intelligence (Anthropic&rsquo;s Claude AI). While every article is based
-              on a real source (YouTube video, news article, or publicly available information)
-              and is reviewed before publication, AI-generated content may contain errors,
-              omissions, or oversimplifications.
-            </p>
-            <p>
-              <strong>
-                Content on this site is for informational purposes only. It does not constitute
-                professional advice of any kind — including legal, financial, medical, or
-                investment advice. Always consult a qualified professional before making decisions
-                based on information you read here.
-              </strong>
-            </p>
-          </Section>
-
-          <Section title="3. Permitted Use">
-            <p>You may read, share, and link to articles on the Site for personal, non-commercial purposes. You may not:</p>
-            <ul className="list-disc list-inside space-y-1 pl-2">
-              <li>Reproduce or republish articles in bulk without written permission</li>
-              <li>Use automated tools to scrape the Site at a scale that degrades performance</li>
-              <li>Use the Site&rsquo;s content to train a competing AI product without permission</li>
-              <li>Attempt to access the admin area without authorisation</li>
-            </ul>
-          </Section>
-
-          <Section title="4. Intellectual Property">
-            <p>
-              The articles, design, logo, and all other content on Factverse Insights are owned by
-              or licensed to us. Original source material (YouTube videos, news articles) remains
-              the property of its respective copyright holders. Our articles are derivative works
-              created for the purpose of commentary and editorial reporting.
-            </p>
-          </Section>
-
-          <Section title="5. Accuracy and Corrections">
-            <p>
-              We make reasonable efforts to ensure articles are accurate and up to date. If you
-              spot an error or inaccuracy, please let us know via the About page and we will
-              review and correct it promptly.
-            </p>
-          </Section>
-
-          <Section title="6. Limitation of Liability">
-            <p>
-              To the maximum extent permitted by applicable law, Factverse Insights is not liable
-              for any direct, indirect, incidental, or consequential damages arising from your use
-              of the Site or reliance on any content published here.
-            </p>
-          </Section>
-
-          <Section title="7. External Links">
-            <p>
-              Articles may contain links to external websites (e.g., YouTube videos, news sources).
-              We are not responsible for the content, privacy practices, or accuracy of external
-              sites. These links are provided for reference only.
-            </p>
-          </Section>
-
-          <Section title="8. Modifications">
-            <p>
-              We reserve the right to modify these Terms at any time. Changes will be posted on
-              this page with an updated effective date. Continued use of the Site after any changes
-              constitutes acceptance of the revised Terms.
-            </p>
-          </Section>
-
-          <Section title="9. Governing Law">
-            <p>
-              These Terms are governed by applicable laws. Any disputes will be resolved in
-              accordance with those laws.
-            </p>
-          </Section>
+        {/* ── Sections ── */}
+        <div className="max-w-3xl mx-auto px-6 py-14 space-y-12">
+          {sections.map((s, i) => (
+            <section key={i} className="grid sm:grid-cols-[200px_1fr] gap-6 sm:gap-10 items-start">
+              <h2 className="text-sm font-bold text-foreground pt-0.5 leading-snug">{s.title}</h2>
+              <div className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">
+                {s.content}
+              </div>
+            </section>
+          ))}
         </div>
 
-        <div className="mt-16 pt-8 border-t border-border">
+        <div className="max-w-3xl mx-auto px-6 pb-16 border-t border-border/60 pt-8">
           <Link href="/" className="text-sm text-neutral-500 hover:text-foreground transition-colors">
             ← Back to stories
           </Link>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { Newspaper, Zap, Eye, BookOpen } from "lucide-react"
 import { PublicHeader } from "@/components/PublicHeader"
 import { SiteFooter } from "@/components/SiteFooter"
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Factverse Insights",
     description:
-      "Learn about Factverse Insights — our mission to turn long-form video and news into clear, in-depth articles using AI.",
+      "Our mission: turn long-form video and news into clear, in-depth articles using AI.",
     url: `${SITE_URL}/about`,
     type: "website",
   },
@@ -39,91 +40,178 @@ const aboutJsonLd = {
   },
 }
 
+const sources = [
+  {
+    icon: <Zap className="size-5 text-primary" />,
+    title: "YouTube Videos & Podcasts",
+    description:
+      "We process a video's transcript, identify key insights and direct quotes, and transform them into a journalist-style article — written as if a reporter watched the video and distilled it for you.",
+  },
+  {
+    icon: <Newspaper className="size-5 text-primary" />,
+    title: "Breaking News & RSS Feeds",
+    description:
+      "Our pipeline monitors reputable news sources and generates original analysis pieces that go beyond the headline — providing context, background, and broader perspective.",
+  },
+  {
+    icon: <BookOpen className="size-5 text-primary" />,
+    title: "Trending Topics",
+    description:
+      "We track what the world is searching for and produce timely explainer articles so readers always have accurate, up-to-date information on topics that matter.",
+  },
+]
+
+const values = [
+  {
+    label: "Transparency",
+    body: "We always disclose when an article is AI-assisted. No hidden automation.",
+  },
+  {
+    label: "Accuracy first",
+    body: "Every article is based on a real, verifiable source — no fabricated quotes or invented facts.",
+  },
+  {
+    label: "Editorial oversight",
+    body: "AI writes the first draft; humans review and approve before publication.",
+  },
+  {
+    label: "Zero ads",
+    body: "No advertising, no tracking pixels, no data brokers. Just articles.",
+  },
+]
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
+
       <PublicHeader />
 
-      <main className="max-w-3xl mx-auto px-6 py-16">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
-        />
-
-        <h1 className="text-4xl font-black tracking-tight mb-4">About Factverse Insights</h1>
-        <p className="text-lg text-neutral-500 dark:text-neutral-400 leading-relaxed mb-14">
-          Making expert knowledge accessible — one article at a time.
-        </p>
-
-        <div className="space-y-12 text-neutral-700 dark:text-neutral-300 leading-relaxed">
-
-          <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">Our Mission</h2>
-            <p>
-              Factverse Insights exists to close the gap between long-form knowledge and the people
-              who need it. Every day, experts share hours of valuable insight on YouTube, in podcasts,
-              and across the news — but most people simply don&rsquo;t have the time to consume it
-              all. We bridge that gap by transforming dense, long-form content into clear, well-structured
-              articles you can read in minutes.
+      <main>
+        {/* ── Hero ── */}
+        <section className="border-b border-border/60 bg-neutral-50 dark:bg-neutral-900/40">
+          <div className="max-w-3xl mx-auto px-6 py-20 text-center">
+            <div className="inline-flex items-center justify-center size-14 rounded-2xl bg-primary/10 mb-6">
+              <Eye className="size-7 text-primary" />
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-foreground mb-5">
+              Making expert knowledge<br className="hidden sm:block" /> accessible to everyone
+            </h1>
+            <p className="text-lg text-neutral-500 dark:text-neutral-400 leading-relaxed max-w-xl mx-auto">
+              Factverse Insights turns hours of video and dense news coverage into clear,
+              well-structured articles you can read in minutes.
             </p>
-          </section>
+          </div>
+        </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">How It Works</h2>
-            <p className="mb-5">
-              Our platform combines AI processing with editorial oversight to produce high-quality
-              articles from multiple content sources:
-            </p>
-            <ul className="space-y-4">
-              {([
-                [
-                  "YouTube Videos & Podcasts",
-                  "We process the transcript of a video, identify key insights, direct quotes, and arguments, and transform them into a journalist-style article — written as if a reporter watched the video and distilled it for the reader.",
-                ],
-                [
-                  "Breaking News & RSS Feeds",
-                  "Our pipeline monitors reputable news sources and generates original analysis pieces that go beyond the headline to provide context, background, and broader perspective.",
-                ],
-                [
-                  "Trending Topics",
-                  "We track what the world is searching for and produce timely explainer articles so readers always have access to accurate, up-to-date information on topics that matter.",
-                ],
-              ] as [string, string][]).map(([title, desc]) => (
-                <li key={title} className="flex gap-4">
+        {/* ── Mission ── */}
+        <section className="max-w-3xl mx-auto px-6 py-16">
+          <div className="grid sm:grid-cols-[1fr_2fr] gap-10 items-start">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Our mission</p>
+              <h2 className="text-2xl font-bold tracking-tight leading-snug">
+                Close the gap between knowledge and time
+              </h2>
+            </div>
+            <div className="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-4">
+              <p>
+                Every day, experts share hours of valuable insight on YouTube, in podcasts,
+                and across the news. Most people simply don&rsquo;t have time to consume it all.
+              </p>
+              <p>
+                We bridge that gap — transforming dense, long-form content into clear, well-structured
+                articles. Whether it&rsquo;s a two-hour interview or a breaking news story,
+                we extract what matters and present it in a way that respects your time.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── How it works ── */}
+        <section className="border-t border-border/60 bg-neutral-50 dark:bg-neutral-900/40">
+          <div className="max-w-3xl mx-auto px-6 py-16">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">How it works</p>
+            <h2 className="text-2xl font-bold tracking-tight mb-10">Three content streams</h2>
+            <div className="grid sm:grid-cols-3 gap-6">
+              {sources.map((s) => (
+                <div key={s.title} className="bg-background rounded-2xl border border-border/60 p-6 space-y-3">
+                  <div className="size-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                    {s.icon}
+                  </div>
+                  <h3 className="font-bold text-sm text-foreground">{s.title}</h3>
+                  <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                    {s.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Transparency ── */}
+        <section className="max-w-3xl mx-auto px-6 py-16 border-t border-border/60">
+          <div className="grid sm:grid-cols-[1fr_2fr] gap-10 items-start">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Transparency</p>
+              <h2 className="text-2xl font-bold tracking-tight leading-snug">
+                How we produce content
+              </h2>
+            </div>
+            <div className="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-4">
+              <p>
+                All articles on Factverse Insights are generated with the assistance of AI
+                (Anthropic&rsquo;s Claude). Every article is based on a real underlying source and
+                is reviewed by our editorial team before publication.
+              </p>
+              <p>
+                We do not fabricate quotes, invent sources, or publish content that cannot be traced
+                back to verifiable material. The AI writes; the humans verify.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Values ── */}
+        <section className="border-t border-border/60 bg-neutral-50 dark:bg-neutral-900/40">
+          <div className="max-w-3xl mx-auto px-6 py-16">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Our values</p>
+            <h2 className="text-2xl font-bold tracking-tight mb-10">What we stand for</h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {values.map((v) => (
+                <div key={v.label} className="flex gap-4">
                   <span className="mt-2 size-1.5 rounded-full bg-primary shrink-0" />
                   <div>
-                    <span className="font-semibold text-foreground">{title} — </span>
-                    <span>{desc}</span>
+                    <p className="font-semibold text-foreground text-sm mb-1">{v.label}</p>
+                    <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{v.body}</p>
                   </div>
-                </li>
+                </div>
               ))}
-            </ul>
-          </section>
+            </div>
+          </div>
+        </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">Our Commitment to Transparency</h2>
-            <p>
-              We believe in full transparency about how our content is produced. All articles on
-              Factverse Insights are generated with the assistance of AI (Anthropic&rsquo;s Claude).
-              Every article is reviewed by our editorial team before publication. We do not fabricate
-              quotes, invent sources, or publish content without a real underlying source. The AI
-              writes; the humans verify.
-            </p>
-          </section>
+        {/* ── Coverage ── */}
+        <section className="max-w-3xl mx-auto px-6 py-16 border-t border-border/60">
+          <div className="grid sm:grid-cols-[1fr_2fr] gap-10 items-start">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Coverage</p>
+              <h2 className="text-2xl font-bold tracking-tight leading-snug">What we write about</h2>
+            </div>
+            <div className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              <p>
+                Technology, business, science, world affairs, health, and culture. We focus on
+                topics that deserve deeper exploration than a tweet or breaking headline can offer —
+                stories where context and analysis make all the difference.
+              </p>
+            </div>
+          </div>
+        </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">What We Cover</h2>
-            <p>
-              Factverse Insights covers technology, business, science, world affairs, health, and
-              culture. We focus on topics that deserve deeper exploration than a tweet or a
-              breaking-news headline can offer — stories where context and analysis make all the
-              difference.
-            </p>
-          </section>
-
-        </div>
-
-        <div className="mt-16 pt-8 border-t border-border">
+        {/* ── Back link ── */}
+        <div className="max-w-3xl mx-auto px-6 pb-16">
           <Link href="/" className="text-sm text-neutral-500 hover:text-foreground transition-colors">
             ← Back to stories
           </Link>

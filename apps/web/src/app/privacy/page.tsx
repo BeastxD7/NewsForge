@@ -14,132 +14,167 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="space-y-3">
-      <h2 className="text-lg font-bold text-foreground">{title}</h2>
-      <div className="text-neutral-700 dark:text-neutral-300 leading-relaxed space-y-3">{children}</div>
-    </section>
-  )
-}
+const sections = [
+  {
+    title: "1. Overview",
+    content: (
+      <p>
+        Factverse Insights (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) operates{" "}
+        <a href={SITE_URL} className="text-primary hover:underline">factverseinsight.com</a>.
+        This Privacy Policy explains what information we collect, how we use it, and your rights.
+        By using our site, you agree to the practices described here.
+      </p>
+    ),
+  },
+  {
+    title: "2. Information We Collect",
+    content: (
+      <div className="space-y-3">
+        <p>
+          <strong className="text-foreground">a) Account data.</strong> Admin users provide an
+          email address and password. Passwords are stored as bcrypt hashes — never in plain text.
+        </p>
+        <p>
+          <strong className="text-foreground">b) Server logs.</strong> We collect standard
+          request logs — IP address, browser type, referring URL, and pages visited — for security
+          monitoring and performance analysis only. This data is never sold or shared with
+          advertising networks.
+        </p>
+        <p>
+          <strong className="text-foreground">c) Cookies.</strong> One session cookie (set by
+          NextAuth) keeps admin users signed in. Public readers receive no cookies. We use no
+          advertising cookies, tracking pixels, or third-party analytics.
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "3. How We Use Your Data",
+    content: (
+      <div className="space-y-3">
+        <p>We use collected data only to:</p>
+        <ul className="space-y-2 pl-1">
+          {[
+            "Authenticate admin users and maintain secure sessions",
+            "Monitor site security and diagnose technical issues",
+            "Improve site performance and reliability",
+          ].map((item) => (
+            <li key={item} className="flex gap-3 items-start">
+              <span className="mt-2 size-1.5 rounded-full bg-primary shrink-0" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p>We do not use your data for advertising and do not sell it to third parties.</p>
+      </div>
+    ),
+  },
+  {
+    title: "4. AI-Generated Content",
+    content: (
+      <p>
+        Articles are generated using Anthropic&rsquo;s Claude AI. Transcripts and source material
+        are sent to Anthropic&rsquo;s API to produce article content. See{" "}
+        <a
+          href="https://www.anthropic.com/privacy"
+          className="text-primary hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Anthropic&rsquo;s Privacy Policy
+        </a>{" "}
+        for how they handle API data. No personal reader data is included in these API calls.
+      </p>
+    ),
+  },
+  {
+    title: "5. Data Retention",
+    content: (
+      <p>
+        Server logs are kept for up to 30 days. Admin account data is held for as long as the
+        account remains active.
+      </p>
+    ),
+  },
+  {
+    title: "6. Your Rights",
+    content: (
+      <p>
+        Depending on your location, you may have the right to access, correct, or delete personal
+        data we hold. We will make reasonable efforts to action such requests within 30 days.
+        Contact us via the About page.
+      </p>
+    ),
+  },
+  {
+    title: "7. Third-Party Services",
+    content: (
+      <div className="space-y-3">
+        <p>We use these external services to operate the site:</p>
+        <div className="grid sm:grid-cols-3 gap-4">
+          {[
+            { name: "Anthropic Claude", role: "AI article generation — no reader data sent" },
+            { name: "Pexels", role: "Stock photography for article cover images" },
+            { name: "YouTube / Google", role: "Video transcripts as source material" },
+          ].map((s) => (
+            <div key={s.name} className="bg-neutral-50 dark:bg-neutral-900 rounded-xl border border-border/60 p-4">
+              <p className="font-semibold text-sm text-foreground mb-1">{s.name}</p>
+              <p className="text-xs text-neutral-500 leading-relaxed">{s.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "8. Security",
+    content: (
+      <p>
+        We use HTTPS, bcrypt password hashing, and industry-standard database security. No
+        system is perfectly secure — if you discover a vulnerability, please report it via our
+        About page.
+      </p>
+    ),
+  },
+  {
+    title: "9. Changes to This Policy",
+    content: (
+      <p>
+        We may update this policy from time to time. The effective date at the top of this page
+        will be updated when changes occur. Continued use of the site constitutes acceptance.
+      </p>
+    ),
+  },
+]
 
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background">
       <PublicHeader />
 
-      <main className="max-w-3xl mx-auto px-6 py-16">
-        <h1 className="text-4xl font-black tracking-tight mb-2">Privacy Policy</h1>
-        <p className="text-sm text-neutral-500 mb-14">Effective date: {EFFECTIVE_DATE}</p>
+      <main>
+        {/* ── Hero ── */}
+        <section className="border-b border-border/60 bg-neutral-50 dark:bg-neutral-900/40">
+          <div className="max-w-3xl mx-auto px-6 py-16">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">Legal</p>
+            <h1 className="text-4xl font-black tracking-tight text-foreground mb-3">Privacy Policy</h1>
+            <p className="text-sm text-neutral-500">Effective date: {EFFECTIVE_DATE}</p>
+          </div>
+        </section>
 
-        <div className="space-y-10">
-          <Section title="1. Overview">
-            <p>
-              Factverse Insights (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) operates
-              the website{" "}
-              <a href={SITE_URL} className="text-primary hover:underline">
-                factverseinsight.com
-              </a>
-              . This Privacy Policy explains what information we collect, how we use it, and your
-              rights in relation to it. By using our site, you agree to the practices described here.
-            </p>
-          </Section>
-
-          <Section title="2. Information We Collect">
-            <p>
-              <strong>a) Information you provide.</strong> If you create an account (admin users
-              only), we collect your email address and a hashed password. We never store plain-text
-              passwords.
-            </p>
-            <p>
-              <strong>b) Usage data.</strong> We automatically collect standard server logs when
-              you visit our site — your IP address, browser type, referring URL, and pages visited.
-              This data is used solely for security monitoring and site performance analysis. It is
-              not sold or shared with advertising networks.
-            </p>
-            <p>
-              <strong>c) Cookies.</strong> We use a single session cookie (set by NextAuth) to
-              keep admin users signed in. Public readers are not tracked with cookies. We do not
-              use advertising cookies, tracking pixels, or third-party analytics scripts.
-            </p>
-          </Section>
-
-          <Section title="3. How We Use Your Information">
-            <p>We use the data we collect to:</p>
-            <ul className="list-disc list-inside space-y-1 pl-2">
-              <li>Authenticate admin users and keep sessions secure</li>
-              <li>Monitor and protect the security of the site</li>
-              <li>Improve site performance and diagnose technical issues</li>
-            </ul>
-            <p>We do not use your data for advertising or sell it to third parties.</p>
-          </Section>
-
-          <Section title="4. AI-Generated Content">
-            <p>
-              Articles on this site are generated with the assistance of AI (Anthropic&rsquo;s
-              Claude). Transcripts and source material processed by our pipeline are sent to
-              Anthropic&rsquo;s API in order to generate article content. Please review{" "}
-              <a
-                href="https://www.anthropic.com/privacy"
-                className="text-primary hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Anthropic&rsquo;s Privacy Policy
-              </a>{" "}
-              for how they handle API data.
-            </p>
-          </Section>
-
-          <Section title="5. Data Retention">
-            <p>
-              Server logs are retained for up to 30 days. Admin account data is retained for as
-              long as the account is active.
-            </p>
-          </Section>
-
-          <Section title="6. Your Rights">
-            <p>
-              Depending on your location, you may have the right to access, correct, or delete
-              personal data we hold about you. We will make reasonable efforts to respond to such
-              requests within 30 days.
-            </p>
-          </Section>
-
-          <Section title="7. Third-Party Services">
-            <p>We use the following third-party services to operate the site:</p>
-            <ul className="list-disc list-inside space-y-1 pl-2">
-              <li>
-                <strong>Anthropic Claude</strong> — AI article generation (API calls only; no
-                personal reader data is sent)
-              </li>
-              <li>
-                <strong>Pexels</strong> — Stock photography for article cover images
-              </li>
-              <li>
-                <strong>YouTube / Google</strong> — Video transcripts for source content
-              </li>
-            </ul>
-          </Section>
-
-          <Section title="8. Security">
-            <p>
-              We use HTTPS, hashed passwords (bcrypt), and industry-standard database security
-              practices. No system is perfectly secure — if you discover a vulnerability, please
-              report it via the About page.
-            </p>
-          </Section>
-
-          <Section title="9. Changes to This Policy">
-            <p>
-              We may update this policy from time to time. When we do, we will update the effective
-              date at the top of this page. Continued use of the site after changes constitutes
-              acceptance of the revised policy.
-            </p>
-          </Section>
+        {/* ── Sections ── */}
+        <div className="max-w-3xl mx-auto px-6 py-14 space-y-12">
+          {sections.map((s, i) => (
+            <section key={i} className="grid sm:grid-cols-[200px_1fr] gap-6 sm:gap-10 items-start">
+              <h2 className="text-sm font-bold text-foreground pt-0.5 leading-snug">{s.title}</h2>
+              <div className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">
+                {s.content}
+              </div>
+            </section>
+          ))}
         </div>
 
-        <div className="mt-16 pt-8 border-t border-border">
+        <div className="max-w-3xl mx-auto px-6 pb-16 border-t border-border/60 pt-8">
           <Link href="/" className="text-sm text-neutral-500 hover:text-foreground transition-colors">
             ← Back to stories
           </Link>
