@@ -5,6 +5,47 @@ Format: newest changes at the top.
 
 ---
 
+## [2026-04-12] — Static Pages, Paginated Articles, Homepage Cleanup & Search Console Fixes
+
+### New Pages
+- **`/articles`** — full paginated article listing (12 per page) with Prev/Next navigation and canonical URLs per page. Replaces the previous behaviour of dumping all 50 articles on the homepage.
+- **`/about`** — about page with mission statement, how-it-works section, AI transparency disclosure, and `AboutPage` + `Organization` JSON-LD structured data. This is a Google E-E-A-T signal.
+- **`/privacy`** — full privacy policy (data collection, AI processing, third parties, user rights, GDPR contact).
+- **`/terms`** — terms of service with explicit AI-generated content disclosure (required for Google trust).
+
+### Google Search Console Fixes
+- **Canonical on homepage** — added `export const metadata` to `app/page.tsx` with explicit `alternates.canonical = "/"`. Previously the `?category=tech` filter URLs had no per-page canonical override, causing Google to report them as "Alternate page with proper canonical tag" (5 pages). Now every variant of the homepage declares the same canonical.
+- **Login page — noindex** — added `app/login/layout.tsx` with `robots: { index: false }`. The login page was likely the "Crawled — currently not indexed" report entry.
+- **Draft pages — noindex** — added `app/draft/layout.tsx` with `robots: { index: false }`. Draft article URLs should never appear in search results.
+
+### Homepage
+- **Article grid capped at 8** — homepage now shows 1 featured article + up to 8 in the grid instead of up to 49. Cleaner, faster, less overwhelming.
+- **"View all articles →" button** — links to `/articles` so users can browse the full paginated catalogue.
+- **Inline footer replaced** with shared `SiteFooter` component.
+
+### Footer Upgrade
+- New `SiteFooter` component (`components/SiteFooter.tsx`) replaces the inline footer in `page.tsx`.
+- Two footer columns: **Explore** (Home, All Articles) and **Company** (About, Privacy, Terms).
+- All new static pages are linked from the footer — important for Google to discover and index them.
+
+### Sitemap
+- Added `/articles`, `/about`, `/privacy`, `/terms` to `sitemap.ts`.
+- `/articles` gets `daily` changeFrequency and `0.9` priority (second only to homepage).
+- Static legal pages get `monthly`/`yearly` frequency and low priority so crawl budget isn't wasted.
+
+### Files Changed
+- `apps/web/src/app/page.tsx` — canonical metadata, grid cap, view-all button, SiteFooter
+- `apps/web/src/app/articles/page.tsx` — **new** paginated listing
+- `apps/web/src/app/about/page.tsx` — **new** about page
+- `apps/web/src/app/privacy/page.tsx` — **new** privacy policy
+- `apps/web/src/app/terms/page.tsx` — **new** terms of service
+- `apps/web/src/app/login/layout.tsx` — **new** noindex
+- `apps/web/src/app/draft/layout.tsx` — **new** noindex
+- `apps/web/src/components/SiteFooter.tsx` — **new** shared footer component
+- `apps/web/src/app/sitemap.ts` — added static routes
+
+---
+
 ## [2025-03-15] — Production Hardening, SEO & AI Discovery
 
 ### Security
