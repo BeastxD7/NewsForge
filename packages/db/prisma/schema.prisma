@@ -310,3 +310,46 @@ model AiConfig {
 
   @@map("ai_configs")
 }
+
+// ─── Analytics ───────────────────────────────────────────────────────────────
+
+model PageView {
+  id         String   @id @default(cuid())
+  sessionId  String
+  url        String
+  referrer   String?
+  // Geo from IP
+  country    String?
+  region     String?
+  city       String?
+  // Device info from User-Agent
+  browser    String?
+  os         String?
+  device     String?  // desktop | mobile | tablet
+  // Raw
+  ip         String?
+  userAgent  String?  @db.Text
+  // Duration on previous page (sent on next navigation)
+  duration   Int?     // seconds
+  createdAt  DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([createdAt])
+  @@index([url])
+  @@index([country])
+  @@map("page_views")
+}
+
+model ClickEvent {
+  id        String   @id @default(cuid())
+  sessionId String
+  url       String   // page where click happened
+  element   String?  // tag name e.g. "a", "button"
+  text      String?  // visible text content (truncated)
+  href      String?  // if it was a link
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([createdAt])
+  @@map("click_events")
+}

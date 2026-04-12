@@ -83,6 +83,16 @@ export type JobRun = $Result.DefaultSelection<Prisma.$JobRunPayload>
  * 
  */
 export type AiConfig = $Result.DefaultSelection<Prisma.$AiConfigPayload>
+/**
+ * Model PageView
+ * 
+ */
+export type PageView = $Result.DefaultSelection<Prisma.$PageViewPayload>
+/**
+ * Model ClickEvent
+ * 
+ */
+export type ClickEvent = $Result.DefaultSelection<Prisma.$ClickEventPayload>
 
 /**
  * Enums
@@ -435,6 +445,26 @@ export class PrismaClient<
     * ```
     */
   get aiConfig(): Prisma.AiConfigDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pageView`: Exposes CRUD operations for the **PageView** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PageViews
+    * const pageViews = await prisma.pageView.findMany()
+    * ```
+    */
+  get pageView(): Prisma.PageViewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clickEvent`: Exposes CRUD operations for the **ClickEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClickEvents
+    * const clickEvents = await prisma.clickEvent.findMany()
+    * ```
+    */
+  get clickEvent(): Prisma.ClickEventDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -889,7 +919,9 @@ export namespace Prisma {
     YoutubeChannel: 'YoutubeChannel',
     MediaUpload: 'MediaUpload',
     JobRun: 'JobRun',
-    AiConfig: 'AiConfig'
+    AiConfig: 'AiConfig',
+    PageView: 'PageView',
+    ClickEvent: 'ClickEvent'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -908,7 +940,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "category" | "tag" | "article" | "articleTag" | "topic" | "contentSource" | "youtubeChannel" | "mediaUpload" | "jobRun" | "aiConfig"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "category" | "tag" | "article" | "articleTag" | "topic" | "contentSource" | "youtubeChannel" | "mediaUpload" | "jobRun" | "aiConfig" | "pageView" | "clickEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1948,6 +1980,154 @@ export namespace Prisma {
           }
         }
       }
+      PageView: {
+        payload: Prisma.$PageViewPayload<ExtArgs>
+        fields: Prisma.PageViewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PageViewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PageViewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload>
+          }
+          findFirst: {
+            args: Prisma.PageViewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PageViewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload>
+          }
+          findMany: {
+            args: Prisma.PageViewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload>[]
+          }
+          create: {
+            args: Prisma.PageViewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload>
+          }
+          createMany: {
+            args: Prisma.PageViewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PageViewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload>[]
+          }
+          delete: {
+            args: Prisma.PageViewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload>
+          }
+          update: {
+            args: Prisma.PageViewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload>
+          }
+          deleteMany: {
+            args: Prisma.PageViewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PageViewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PageViewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload>[]
+          }
+          upsert: {
+            args: Prisma.PageViewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageViewPayload>
+          }
+          aggregate: {
+            args: Prisma.PageViewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePageView>
+          }
+          groupBy: {
+            args: Prisma.PageViewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PageViewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PageViewCountArgs<ExtArgs>
+            result: $Utils.Optional<PageViewCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClickEvent: {
+        payload: Prisma.$ClickEventPayload<ExtArgs>
+        fields: Prisma.ClickEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClickEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClickEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          findFirst: {
+            args: Prisma.ClickEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClickEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          findMany: {
+            args: Prisma.ClickEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>[]
+          }
+          create: {
+            args: Prisma.ClickEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          createMany: {
+            args: Prisma.ClickEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClickEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>[]
+          }
+          delete: {
+            args: Prisma.ClickEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          update: {
+            args: Prisma.ClickEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClickEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClickEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClickEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClickEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClickEventPayload>
+          }
+          aggregate: {
+            args: Prisma.ClickEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClickEvent>
+          }
+          groupBy: {
+            args: Prisma.ClickEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClickEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClickEventCountArgs<ExtArgs>
+            result: $Utils.Optional<ClickEventCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2058,6 +2238,8 @@ export namespace Prisma {
     mediaUpload?: MediaUploadOmit
     jobRun?: JobRunOmit
     aiConfig?: AiConfigOmit
+    pageView?: PageViewOmit
+    clickEvent?: ClickEventOmit
   }
 
   /* Types for Logging */
@@ -18237,6 +18419,2173 @@ export namespace Prisma {
 
 
   /**
+   * Model PageView
+   */
+
+  export type AggregatePageView = {
+    _count: PageViewCountAggregateOutputType | null
+    _avg: PageViewAvgAggregateOutputType | null
+    _sum: PageViewSumAggregateOutputType | null
+    _min: PageViewMinAggregateOutputType | null
+    _max: PageViewMaxAggregateOutputType | null
+  }
+
+  export type PageViewAvgAggregateOutputType = {
+    duration: number | null
+  }
+
+  export type PageViewSumAggregateOutputType = {
+    duration: number | null
+  }
+
+  export type PageViewMinAggregateOutputType = {
+    id: string | null
+    sessionId: string | null
+    url: string | null
+    referrer: string | null
+    country: string | null
+    region: string | null
+    city: string | null
+    browser: string | null
+    os: string | null
+    device: string | null
+    ip: string | null
+    userAgent: string | null
+    duration: number | null
+    createdAt: Date | null
+  }
+
+  export type PageViewMaxAggregateOutputType = {
+    id: string | null
+    sessionId: string | null
+    url: string | null
+    referrer: string | null
+    country: string | null
+    region: string | null
+    city: string | null
+    browser: string | null
+    os: string | null
+    device: string | null
+    ip: string | null
+    userAgent: string | null
+    duration: number | null
+    createdAt: Date | null
+  }
+
+  export type PageViewCountAggregateOutputType = {
+    id: number
+    sessionId: number
+    url: number
+    referrer: number
+    country: number
+    region: number
+    city: number
+    browser: number
+    os: number
+    device: number
+    ip: number
+    userAgent: number
+    duration: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type PageViewAvgAggregateInputType = {
+    duration?: true
+  }
+
+  export type PageViewSumAggregateInputType = {
+    duration?: true
+  }
+
+  export type PageViewMinAggregateInputType = {
+    id?: true
+    sessionId?: true
+    url?: true
+    referrer?: true
+    country?: true
+    region?: true
+    city?: true
+    browser?: true
+    os?: true
+    device?: true
+    ip?: true
+    userAgent?: true
+    duration?: true
+    createdAt?: true
+  }
+
+  export type PageViewMaxAggregateInputType = {
+    id?: true
+    sessionId?: true
+    url?: true
+    referrer?: true
+    country?: true
+    region?: true
+    city?: true
+    browser?: true
+    os?: true
+    device?: true
+    ip?: true
+    userAgent?: true
+    duration?: true
+    createdAt?: true
+  }
+
+  export type PageViewCountAggregateInputType = {
+    id?: true
+    sessionId?: true
+    url?: true
+    referrer?: true
+    country?: true
+    region?: true
+    city?: true
+    browser?: true
+    os?: true
+    device?: true
+    ip?: true
+    userAgent?: true
+    duration?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type PageViewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PageView to aggregate.
+     */
+    where?: PageViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PageViews to fetch.
+     */
+    orderBy?: PageViewOrderByWithRelationInput | PageViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PageViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PageViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PageViews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PageViews
+    **/
+    _count?: true | PageViewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PageViewAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PageViewSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PageViewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PageViewMaxAggregateInputType
+  }
+
+  export type GetPageViewAggregateType<T extends PageViewAggregateArgs> = {
+        [P in keyof T & keyof AggregatePageView]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePageView[P]>
+      : GetScalarType<T[P], AggregatePageView[P]>
+  }
+
+
+
+
+  export type PageViewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PageViewWhereInput
+    orderBy?: PageViewOrderByWithAggregationInput | PageViewOrderByWithAggregationInput[]
+    by: PageViewScalarFieldEnum[] | PageViewScalarFieldEnum
+    having?: PageViewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PageViewCountAggregateInputType | true
+    _avg?: PageViewAvgAggregateInputType
+    _sum?: PageViewSumAggregateInputType
+    _min?: PageViewMinAggregateInputType
+    _max?: PageViewMaxAggregateInputType
+  }
+
+  export type PageViewGroupByOutputType = {
+    id: string
+    sessionId: string
+    url: string
+    referrer: string | null
+    country: string | null
+    region: string | null
+    city: string | null
+    browser: string | null
+    os: string | null
+    device: string | null
+    ip: string | null
+    userAgent: string | null
+    duration: number | null
+    createdAt: Date
+    _count: PageViewCountAggregateOutputType | null
+    _avg: PageViewAvgAggregateOutputType | null
+    _sum: PageViewSumAggregateOutputType | null
+    _min: PageViewMinAggregateOutputType | null
+    _max: PageViewMaxAggregateOutputType | null
+  }
+
+  type GetPageViewGroupByPayload<T extends PageViewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PageViewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PageViewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PageViewGroupByOutputType[P]>
+            : GetScalarType<T[P], PageViewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PageViewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sessionId?: boolean
+    url?: boolean
+    referrer?: boolean
+    country?: boolean
+    region?: boolean
+    city?: boolean
+    browser?: boolean
+    os?: boolean
+    device?: boolean
+    ip?: boolean
+    userAgent?: boolean
+    duration?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["pageView"]>
+
+  export type PageViewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sessionId?: boolean
+    url?: boolean
+    referrer?: boolean
+    country?: boolean
+    region?: boolean
+    city?: boolean
+    browser?: boolean
+    os?: boolean
+    device?: boolean
+    ip?: boolean
+    userAgent?: boolean
+    duration?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["pageView"]>
+
+  export type PageViewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sessionId?: boolean
+    url?: boolean
+    referrer?: boolean
+    country?: boolean
+    region?: boolean
+    city?: boolean
+    browser?: boolean
+    os?: boolean
+    device?: boolean
+    ip?: boolean
+    userAgent?: boolean
+    duration?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["pageView"]>
+
+  export type PageViewSelectScalar = {
+    id?: boolean
+    sessionId?: boolean
+    url?: boolean
+    referrer?: boolean
+    country?: boolean
+    region?: boolean
+    city?: boolean
+    browser?: boolean
+    os?: boolean
+    device?: boolean
+    ip?: boolean
+    userAgent?: boolean
+    duration?: boolean
+    createdAt?: boolean
+  }
+
+  export type PageViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sessionId" | "url" | "referrer" | "country" | "region" | "city" | "browser" | "os" | "device" | "ip" | "userAgent" | "duration" | "createdAt", ExtArgs["result"]["pageView"]>
+
+  export type $PageViewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PageView"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      sessionId: string
+      url: string
+      referrer: string | null
+      country: string | null
+      region: string | null
+      city: string | null
+      browser: string | null
+      os: string | null
+      device: string | null
+      ip: string | null
+      userAgent: string | null
+      duration: number | null
+      createdAt: Date
+    }, ExtArgs["result"]["pageView"]>
+    composites: {}
+  }
+
+  type PageViewGetPayload<S extends boolean | null | undefined | PageViewDefaultArgs> = $Result.GetResult<Prisma.$PageViewPayload, S>
+
+  type PageViewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PageViewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PageViewCountAggregateInputType | true
+    }
+
+  export interface PageViewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PageView'], meta: { name: 'PageView' } }
+    /**
+     * Find zero or one PageView that matches the filter.
+     * @param {PageViewFindUniqueArgs} args - Arguments to find a PageView
+     * @example
+     * // Get one PageView
+     * const pageView = await prisma.pageView.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PageViewFindUniqueArgs>(args: SelectSubset<T, PageViewFindUniqueArgs<ExtArgs>>): Prisma__PageViewClient<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PageView that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PageViewFindUniqueOrThrowArgs} args - Arguments to find a PageView
+     * @example
+     * // Get one PageView
+     * const pageView = await prisma.pageView.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PageViewFindUniqueOrThrowArgs>(args: SelectSubset<T, PageViewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PageViewClient<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PageView that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageViewFindFirstArgs} args - Arguments to find a PageView
+     * @example
+     * // Get one PageView
+     * const pageView = await prisma.pageView.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PageViewFindFirstArgs>(args?: SelectSubset<T, PageViewFindFirstArgs<ExtArgs>>): Prisma__PageViewClient<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PageView that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageViewFindFirstOrThrowArgs} args - Arguments to find a PageView
+     * @example
+     * // Get one PageView
+     * const pageView = await prisma.pageView.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PageViewFindFirstOrThrowArgs>(args?: SelectSubset<T, PageViewFindFirstOrThrowArgs<ExtArgs>>): Prisma__PageViewClient<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PageViews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageViewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PageViews
+     * const pageViews = await prisma.pageView.findMany()
+     * 
+     * // Get first 10 PageViews
+     * const pageViews = await prisma.pageView.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pageViewWithIdOnly = await prisma.pageView.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PageViewFindManyArgs>(args?: SelectSubset<T, PageViewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PageView.
+     * @param {PageViewCreateArgs} args - Arguments to create a PageView.
+     * @example
+     * // Create one PageView
+     * const PageView = await prisma.pageView.create({
+     *   data: {
+     *     // ... data to create a PageView
+     *   }
+     * })
+     * 
+     */
+    create<T extends PageViewCreateArgs>(args: SelectSubset<T, PageViewCreateArgs<ExtArgs>>): Prisma__PageViewClient<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PageViews.
+     * @param {PageViewCreateManyArgs} args - Arguments to create many PageViews.
+     * @example
+     * // Create many PageViews
+     * const pageView = await prisma.pageView.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PageViewCreateManyArgs>(args?: SelectSubset<T, PageViewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PageViews and returns the data saved in the database.
+     * @param {PageViewCreateManyAndReturnArgs} args - Arguments to create many PageViews.
+     * @example
+     * // Create many PageViews
+     * const pageView = await prisma.pageView.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PageViews and only return the `id`
+     * const pageViewWithIdOnly = await prisma.pageView.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PageViewCreateManyAndReturnArgs>(args?: SelectSubset<T, PageViewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PageView.
+     * @param {PageViewDeleteArgs} args - Arguments to delete one PageView.
+     * @example
+     * // Delete one PageView
+     * const PageView = await prisma.pageView.delete({
+     *   where: {
+     *     // ... filter to delete one PageView
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PageViewDeleteArgs>(args: SelectSubset<T, PageViewDeleteArgs<ExtArgs>>): Prisma__PageViewClient<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PageView.
+     * @param {PageViewUpdateArgs} args - Arguments to update one PageView.
+     * @example
+     * // Update one PageView
+     * const pageView = await prisma.pageView.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PageViewUpdateArgs>(args: SelectSubset<T, PageViewUpdateArgs<ExtArgs>>): Prisma__PageViewClient<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PageViews.
+     * @param {PageViewDeleteManyArgs} args - Arguments to filter PageViews to delete.
+     * @example
+     * // Delete a few PageViews
+     * const { count } = await prisma.pageView.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PageViewDeleteManyArgs>(args?: SelectSubset<T, PageViewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PageViews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageViewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PageViews
+     * const pageView = await prisma.pageView.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PageViewUpdateManyArgs>(args: SelectSubset<T, PageViewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PageViews and returns the data updated in the database.
+     * @param {PageViewUpdateManyAndReturnArgs} args - Arguments to update many PageViews.
+     * @example
+     * // Update many PageViews
+     * const pageView = await prisma.pageView.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PageViews and only return the `id`
+     * const pageViewWithIdOnly = await prisma.pageView.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PageViewUpdateManyAndReturnArgs>(args: SelectSubset<T, PageViewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PageView.
+     * @param {PageViewUpsertArgs} args - Arguments to update or create a PageView.
+     * @example
+     * // Update or create a PageView
+     * const pageView = await prisma.pageView.upsert({
+     *   create: {
+     *     // ... data to create a PageView
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PageView we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PageViewUpsertArgs>(args: SelectSubset<T, PageViewUpsertArgs<ExtArgs>>): Prisma__PageViewClient<$Result.GetResult<Prisma.$PageViewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PageViews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageViewCountArgs} args - Arguments to filter PageViews to count.
+     * @example
+     * // Count the number of PageViews
+     * const count = await prisma.pageView.count({
+     *   where: {
+     *     // ... the filter for the PageViews we want to count
+     *   }
+     * })
+    **/
+    count<T extends PageViewCountArgs>(
+      args?: Subset<T, PageViewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PageViewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PageView.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageViewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PageViewAggregateArgs>(args: Subset<T, PageViewAggregateArgs>): Prisma.PrismaPromise<GetPageViewAggregateType<T>>
+
+    /**
+     * Group by PageView.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageViewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PageViewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PageViewGroupByArgs['orderBy'] }
+        : { orderBy?: PageViewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PageViewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPageViewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PageView model
+   */
+  readonly fields: PageViewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PageView.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PageViewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PageView model
+   */
+  interface PageViewFieldRefs {
+    readonly id: FieldRef<"PageView", 'String'>
+    readonly sessionId: FieldRef<"PageView", 'String'>
+    readonly url: FieldRef<"PageView", 'String'>
+    readonly referrer: FieldRef<"PageView", 'String'>
+    readonly country: FieldRef<"PageView", 'String'>
+    readonly region: FieldRef<"PageView", 'String'>
+    readonly city: FieldRef<"PageView", 'String'>
+    readonly browser: FieldRef<"PageView", 'String'>
+    readonly os: FieldRef<"PageView", 'String'>
+    readonly device: FieldRef<"PageView", 'String'>
+    readonly ip: FieldRef<"PageView", 'String'>
+    readonly userAgent: FieldRef<"PageView", 'String'>
+    readonly duration: FieldRef<"PageView", 'Int'>
+    readonly createdAt: FieldRef<"PageView", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PageView findUnique
+   */
+  export type PageViewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * Filter, which PageView to fetch.
+     */
+    where: PageViewWhereUniqueInput
+  }
+
+  /**
+   * PageView findUniqueOrThrow
+   */
+  export type PageViewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * Filter, which PageView to fetch.
+     */
+    where: PageViewWhereUniqueInput
+  }
+
+  /**
+   * PageView findFirst
+   */
+  export type PageViewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * Filter, which PageView to fetch.
+     */
+    where?: PageViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PageViews to fetch.
+     */
+    orderBy?: PageViewOrderByWithRelationInput | PageViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PageViews.
+     */
+    cursor?: PageViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PageViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PageViews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PageViews.
+     */
+    distinct?: PageViewScalarFieldEnum | PageViewScalarFieldEnum[]
+  }
+
+  /**
+   * PageView findFirstOrThrow
+   */
+  export type PageViewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * Filter, which PageView to fetch.
+     */
+    where?: PageViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PageViews to fetch.
+     */
+    orderBy?: PageViewOrderByWithRelationInput | PageViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PageViews.
+     */
+    cursor?: PageViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PageViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PageViews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PageViews.
+     */
+    distinct?: PageViewScalarFieldEnum | PageViewScalarFieldEnum[]
+  }
+
+  /**
+   * PageView findMany
+   */
+  export type PageViewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * Filter, which PageViews to fetch.
+     */
+    where?: PageViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PageViews to fetch.
+     */
+    orderBy?: PageViewOrderByWithRelationInput | PageViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PageViews.
+     */
+    cursor?: PageViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PageViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PageViews.
+     */
+    skip?: number
+    distinct?: PageViewScalarFieldEnum | PageViewScalarFieldEnum[]
+  }
+
+  /**
+   * PageView create
+   */
+  export type PageViewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * The data needed to create a PageView.
+     */
+    data: XOR<PageViewCreateInput, PageViewUncheckedCreateInput>
+  }
+
+  /**
+   * PageView createMany
+   */
+  export type PageViewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PageViews.
+     */
+    data: PageViewCreateManyInput | PageViewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PageView createManyAndReturn
+   */
+  export type PageViewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * The data used to create many PageViews.
+     */
+    data: PageViewCreateManyInput | PageViewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PageView update
+   */
+  export type PageViewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * The data needed to update a PageView.
+     */
+    data: XOR<PageViewUpdateInput, PageViewUncheckedUpdateInput>
+    /**
+     * Choose, which PageView to update.
+     */
+    where: PageViewWhereUniqueInput
+  }
+
+  /**
+   * PageView updateMany
+   */
+  export type PageViewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PageViews.
+     */
+    data: XOR<PageViewUpdateManyMutationInput, PageViewUncheckedUpdateManyInput>
+    /**
+     * Filter which PageViews to update
+     */
+    where?: PageViewWhereInput
+    /**
+     * Limit how many PageViews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PageView updateManyAndReturn
+   */
+  export type PageViewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * The data used to update PageViews.
+     */
+    data: XOR<PageViewUpdateManyMutationInput, PageViewUncheckedUpdateManyInput>
+    /**
+     * Filter which PageViews to update
+     */
+    where?: PageViewWhereInput
+    /**
+     * Limit how many PageViews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PageView upsert
+   */
+  export type PageViewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * The filter to search for the PageView to update in case it exists.
+     */
+    where: PageViewWhereUniqueInput
+    /**
+     * In case the PageView found by the `where` argument doesn't exist, create a new PageView with this data.
+     */
+    create: XOR<PageViewCreateInput, PageViewUncheckedCreateInput>
+    /**
+     * In case the PageView was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PageViewUpdateInput, PageViewUncheckedUpdateInput>
+  }
+
+  /**
+   * PageView delete
+   */
+  export type PageViewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+    /**
+     * Filter which PageView to delete.
+     */
+    where: PageViewWhereUniqueInput
+  }
+
+  /**
+   * PageView deleteMany
+   */
+  export type PageViewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PageViews to delete
+     */
+    where?: PageViewWhereInput
+    /**
+     * Limit how many PageViews to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PageView without action
+   */
+  export type PageViewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageView
+     */
+    select?: PageViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageView
+     */
+    omit?: PageViewOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClickEvent
+   */
+
+  export type AggregateClickEvent = {
+    _count: ClickEventCountAggregateOutputType | null
+    _min: ClickEventMinAggregateOutputType | null
+    _max: ClickEventMaxAggregateOutputType | null
+  }
+
+  export type ClickEventMinAggregateOutputType = {
+    id: string | null
+    sessionId: string | null
+    url: string | null
+    element: string | null
+    text: string | null
+    href: string | null
+    createdAt: Date | null
+  }
+
+  export type ClickEventMaxAggregateOutputType = {
+    id: string | null
+    sessionId: string | null
+    url: string | null
+    element: string | null
+    text: string | null
+    href: string | null
+    createdAt: Date | null
+  }
+
+  export type ClickEventCountAggregateOutputType = {
+    id: number
+    sessionId: number
+    url: number
+    element: number
+    text: number
+    href: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ClickEventMinAggregateInputType = {
+    id?: true
+    sessionId?: true
+    url?: true
+    element?: true
+    text?: true
+    href?: true
+    createdAt?: true
+  }
+
+  export type ClickEventMaxAggregateInputType = {
+    id?: true
+    sessionId?: true
+    url?: true
+    element?: true
+    text?: true
+    href?: true
+    createdAt?: true
+  }
+
+  export type ClickEventCountAggregateInputType = {
+    id?: true
+    sessionId?: true
+    url?: true
+    element?: true
+    text?: true
+    href?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ClickEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClickEvent to aggregate.
+     */
+    where?: ClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClickEvents to fetch.
+     */
+    orderBy?: ClickEventOrderByWithRelationInput | ClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClickEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClickEvents
+    **/
+    _count?: true | ClickEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClickEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClickEventMaxAggregateInputType
+  }
+
+  export type GetClickEventAggregateType<T extends ClickEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateClickEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClickEvent[P]>
+      : GetScalarType<T[P], AggregateClickEvent[P]>
+  }
+
+
+
+
+  export type ClickEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClickEventWhereInput
+    orderBy?: ClickEventOrderByWithAggregationInput | ClickEventOrderByWithAggregationInput[]
+    by: ClickEventScalarFieldEnum[] | ClickEventScalarFieldEnum
+    having?: ClickEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClickEventCountAggregateInputType | true
+    _min?: ClickEventMinAggregateInputType
+    _max?: ClickEventMaxAggregateInputType
+  }
+
+  export type ClickEventGroupByOutputType = {
+    id: string
+    sessionId: string
+    url: string
+    element: string | null
+    text: string | null
+    href: string | null
+    createdAt: Date
+    _count: ClickEventCountAggregateOutputType | null
+    _min: ClickEventMinAggregateOutputType | null
+    _max: ClickEventMaxAggregateOutputType | null
+  }
+
+  type GetClickEventGroupByPayload<T extends ClickEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClickEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClickEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClickEventGroupByOutputType[P]>
+            : GetScalarType<T[P], ClickEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClickEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sessionId?: boolean
+    url?: boolean
+    element?: boolean
+    text?: boolean
+    href?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["clickEvent"]>
+
+  export type ClickEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sessionId?: boolean
+    url?: boolean
+    element?: boolean
+    text?: boolean
+    href?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["clickEvent"]>
+
+  export type ClickEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sessionId?: boolean
+    url?: boolean
+    element?: boolean
+    text?: boolean
+    href?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["clickEvent"]>
+
+  export type ClickEventSelectScalar = {
+    id?: boolean
+    sessionId?: boolean
+    url?: boolean
+    element?: boolean
+    text?: boolean
+    href?: boolean
+    createdAt?: boolean
+  }
+
+  export type ClickEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sessionId" | "url" | "element" | "text" | "href" | "createdAt", ExtArgs["result"]["clickEvent"]>
+
+  export type $ClickEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClickEvent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      sessionId: string
+      url: string
+      element: string | null
+      text: string | null
+      href: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["clickEvent"]>
+    composites: {}
+  }
+
+  type ClickEventGetPayload<S extends boolean | null | undefined | ClickEventDefaultArgs> = $Result.GetResult<Prisma.$ClickEventPayload, S>
+
+  type ClickEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClickEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClickEventCountAggregateInputType | true
+    }
+
+  export interface ClickEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClickEvent'], meta: { name: 'ClickEvent' } }
+    /**
+     * Find zero or one ClickEvent that matches the filter.
+     * @param {ClickEventFindUniqueArgs} args - Arguments to find a ClickEvent
+     * @example
+     * // Get one ClickEvent
+     * const clickEvent = await prisma.clickEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClickEventFindUniqueArgs>(args: SelectSubset<T, ClickEventFindUniqueArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClickEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClickEventFindUniqueOrThrowArgs} args - Arguments to find a ClickEvent
+     * @example
+     * // Get one ClickEvent
+     * const clickEvent = await prisma.clickEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClickEventFindUniqueOrThrowArgs>(args: SelectSubset<T, ClickEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClickEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventFindFirstArgs} args - Arguments to find a ClickEvent
+     * @example
+     * // Get one ClickEvent
+     * const clickEvent = await prisma.clickEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClickEventFindFirstArgs>(args?: SelectSubset<T, ClickEventFindFirstArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClickEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventFindFirstOrThrowArgs} args - Arguments to find a ClickEvent
+     * @example
+     * // Get one ClickEvent
+     * const clickEvent = await prisma.clickEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClickEventFindFirstOrThrowArgs>(args?: SelectSubset<T, ClickEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClickEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClickEvents
+     * const clickEvents = await prisma.clickEvent.findMany()
+     * 
+     * // Get first 10 ClickEvents
+     * const clickEvents = await prisma.clickEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clickEventWithIdOnly = await prisma.clickEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClickEventFindManyArgs>(args?: SelectSubset<T, ClickEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClickEvent.
+     * @param {ClickEventCreateArgs} args - Arguments to create a ClickEvent.
+     * @example
+     * // Create one ClickEvent
+     * const ClickEvent = await prisma.clickEvent.create({
+     *   data: {
+     *     // ... data to create a ClickEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClickEventCreateArgs>(args: SelectSubset<T, ClickEventCreateArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClickEvents.
+     * @param {ClickEventCreateManyArgs} args - Arguments to create many ClickEvents.
+     * @example
+     * // Create many ClickEvents
+     * const clickEvent = await prisma.clickEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClickEventCreateManyArgs>(args?: SelectSubset<T, ClickEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClickEvents and returns the data saved in the database.
+     * @param {ClickEventCreateManyAndReturnArgs} args - Arguments to create many ClickEvents.
+     * @example
+     * // Create many ClickEvents
+     * const clickEvent = await prisma.clickEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClickEvents and only return the `id`
+     * const clickEventWithIdOnly = await prisma.clickEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClickEventCreateManyAndReturnArgs>(args?: SelectSubset<T, ClickEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClickEvent.
+     * @param {ClickEventDeleteArgs} args - Arguments to delete one ClickEvent.
+     * @example
+     * // Delete one ClickEvent
+     * const ClickEvent = await prisma.clickEvent.delete({
+     *   where: {
+     *     // ... filter to delete one ClickEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClickEventDeleteArgs>(args: SelectSubset<T, ClickEventDeleteArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClickEvent.
+     * @param {ClickEventUpdateArgs} args - Arguments to update one ClickEvent.
+     * @example
+     * // Update one ClickEvent
+     * const clickEvent = await prisma.clickEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClickEventUpdateArgs>(args: SelectSubset<T, ClickEventUpdateArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClickEvents.
+     * @param {ClickEventDeleteManyArgs} args - Arguments to filter ClickEvents to delete.
+     * @example
+     * // Delete a few ClickEvents
+     * const { count } = await prisma.clickEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClickEventDeleteManyArgs>(args?: SelectSubset<T, ClickEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClickEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClickEvents
+     * const clickEvent = await prisma.clickEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClickEventUpdateManyArgs>(args: SelectSubset<T, ClickEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClickEvents and returns the data updated in the database.
+     * @param {ClickEventUpdateManyAndReturnArgs} args - Arguments to update many ClickEvents.
+     * @example
+     * // Update many ClickEvents
+     * const clickEvent = await prisma.clickEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClickEvents and only return the `id`
+     * const clickEventWithIdOnly = await prisma.clickEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClickEventUpdateManyAndReturnArgs>(args: SelectSubset<T, ClickEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClickEvent.
+     * @param {ClickEventUpsertArgs} args - Arguments to update or create a ClickEvent.
+     * @example
+     * // Update or create a ClickEvent
+     * const clickEvent = await prisma.clickEvent.upsert({
+     *   create: {
+     *     // ... data to create a ClickEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClickEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClickEventUpsertArgs>(args: SelectSubset<T, ClickEventUpsertArgs<ExtArgs>>): Prisma__ClickEventClient<$Result.GetResult<Prisma.$ClickEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClickEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventCountArgs} args - Arguments to filter ClickEvents to count.
+     * @example
+     * // Count the number of ClickEvents
+     * const count = await prisma.clickEvent.count({
+     *   where: {
+     *     // ... the filter for the ClickEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClickEventCountArgs>(
+      args?: Subset<T, ClickEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClickEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClickEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClickEventAggregateArgs>(args: Subset<T, ClickEventAggregateArgs>): Prisma.PrismaPromise<GetClickEventAggregateType<T>>
+
+    /**
+     * Group by ClickEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClickEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClickEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClickEventGroupByArgs['orderBy'] }
+        : { orderBy?: ClickEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClickEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClickEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClickEvent model
+   */
+  readonly fields: ClickEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClickEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClickEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClickEvent model
+   */
+  interface ClickEventFieldRefs {
+    readonly id: FieldRef<"ClickEvent", 'String'>
+    readonly sessionId: FieldRef<"ClickEvent", 'String'>
+    readonly url: FieldRef<"ClickEvent", 'String'>
+    readonly element: FieldRef<"ClickEvent", 'String'>
+    readonly text: FieldRef<"ClickEvent", 'String'>
+    readonly href: FieldRef<"ClickEvent", 'String'>
+    readonly createdAt: FieldRef<"ClickEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClickEvent findUnique
+   */
+  export type ClickEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which ClickEvent to fetch.
+     */
+    where: ClickEventWhereUniqueInput
+  }
+
+  /**
+   * ClickEvent findUniqueOrThrow
+   */
+  export type ClickEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which ClickEvent to fetch.
+     */
+    where: ClickEventWhereUniqueInput
+  }
+
+  /**
+   * ClickEvent findFirst
+   */
+  export type ClickEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which ClickEvent to fetch.
+     */
+    where?: ClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClickEvents to fetch.
+     */
+    orderBy?: ClickEventOrderByWithRelationInput | ClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClickEvents.
+     */
+    cursor?: ClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClickEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClickEvents.
+     */
+    distinct?: ClickEventScalarFieldEnum | ClickEventScalarFieldEnum[]
+  }
+
+  /**
+   * ClickEvent findFirstOrThrow
+   */
+  export type ClickEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which ClickEvent to fetch.
+     */
+    where?: ClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClickEvents to fetch.
+     */
+    orderBy?: ClickEventOrderByWithRelationInput | ClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClickEvents.
+     */
+    cursor?: ClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClickEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClickEvents.
+     */
+    distinct?: ClickEventScalarFieldEnum | ClickEventScalarFieldEnum[]
+  }
+
+  /**
+   * ClickEvent findMany
+   */
+  export type ClickEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Filter, which ClickEvents to fetch.
+     */
+    where?: ClickEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClickEvents to fetch.
+     */
+    orderBy?: ClickEventOrderByWithRelationInput | ClickEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClickEvents.
+     */
+    cursor?: ClickEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClickEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClickEvents.
+     */
+    skip?: number
+    distinct?: ClickEventScalarFieldEnum | ClickEventScalarFieldEnum[]
+  }
+
+  /**
+   * ClickEvent create
+   */
+  export type ClickEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ClickEvent.
+     */
+    data: XOR<ClickEventCreateInput, ClickEventUncheckedCreateInput>
+  }
+
+  /**
+   * ClickEvent createMany
+   */
+  export type ClickEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClickEvents.
+     */
+    data: ClickEventCreateManyInput | ClickEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClickEvent createManyAndReturn
+   */
+  export type ClickEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClickEvents.
+     */
+    data: ClickEventCreateManyInput | ClickEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClickEvent update
+   */
+  export type ClickEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ClickEvent.
+     */
+    data: XOR<ClickEventUpdateInput, ClickEventUncheckedUpdateInput>
+    /**
+     * Choose, which ClickEvent to update.
+     */
+    where: ClickEventWhereUniqueInput
+  }
+
+  /**
+   * ClickEvent updateMany
+   */
+  export type ClickEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClickEvents.
+     */
+    data: XOR<ClickEventUpdateManyMutationInput, ClickEventUncheckedUpdateManyInput>
+    /**
+     * Filter which ClickEvents to update
+     */
+    where?: ClickEventWhereInput
+    /**
+     * Limit how many ClickEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClickEvent updateManyAndReturn
+   */
+  export type ClickEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * The data used to update ClickEvents.
+     */
+    data: XOR<ClickEventUpdateManyMutationInput, ClickEventUncheckedUpdateManyInput>
+    /**
+     * Filter which ClickEvents to update
+     */
+    where?: ClickEventWhereInput
+    /**
+     * Limit how many ClickEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClickEvent upsert
+   */
+  export type ClickEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ClickEvent to update in case it exists.
+     */
+    where: ClickEventWhereUniqueInput
+    /**
+     * In case the ClickEvent found by the `where` argument doesn't exist, create a new ClickEvent with this data.
+     */
+    create: XOR<ClickEventCreateInput, ClickEventUncheckedCreateInput>
+    /**
+     * In case the ClickEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClickEventUpdateInput, ClickEventUncheckedUpdateInput>
+  }
+
+  /**
+   * ClickEvent delete
+   */
+  export type ClickEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+    /**
+     * Filter which ClickEvent to delete.
+     */
+    where: ClickEventWhereUniqueInput
+  }
+
+  /**
+   * ClickEvent deleteMany
+   */
+  export type ClickEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClickEvents to delete
+     */
+    where?: ClickEventWhereInput
+    /**
+     * Limit how many ClickEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClickEvent without action
+   */
+  export type ClickEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClickEvent
+     */
+    select?: ClickEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClickEvent
+     */
+    omit?: ClickEventOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -18452,6 +20801,39 @@ export namespace Prisma {
   };
 
   export type AiConfigScalarFieldEnum = (typeof AiConfigScalarFieldEnum)[keyof typeof AiConfigScalarFieldEnum]
+
+
+  export const PageViewScalarFieldEnum: {
+    id: 'id',
+    sessionId: 'sessionId',
+    url: 'url',
+    referrer: 'referrer',
+    country: 'country',
+    region: 'region',
+    city: 'city',
+    browser: 'browser',
+    os: 'os',
+    device: 'device',
+    ip: 'ip',
+    userAgent: 'userAgent',
+    duration: 'duration',
+    createdAt: 'createdAt'
+  };
+
+  export type PageViewScalarFieldEnum = (typeof PageViewScalarFieldEnum)[keyof typeof PageViewScalarFieldEnum]
+
+
+  export const ClickEventScalarFieldEnum: {
+    id: 'id',
+    sessionId: 'sessionId',
+    url: 'url',
+    element: 'element',
+    text: 'text',
+    href: 'href',
+    createdAt: 'createdAt'
+  };
+
+  export type ClickEventScalarFieldEnum = (typeof ClickEventScalarFieldEnum)[keyof typeof ClickEventScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -19719,6 +22101,167 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"AiConfig"> | Date | string
   }
 
+  export type PageViewWhereInput = {
+    AND?: PageViewWhereInput | PageViewWhereInput[]
+    OR?: PageViewWhereInput[]
+    NOT?: PageViewWhereInput | PageViewWhereInput[]
+    id?: StringFilter<"PageView"> | string
+    sessionId?: StringFilter<"PageView"> | string
+    url?: StringFilter<"PageView"> | string
+    referrer?: StringNullableFilter<"PageView"> | string | null
+    country?: StringNullableFilter<"PageView"> | string | null
+    region?: StringNullableFilter<"PageView"> | string | null
+    city?: StringNullableFilter<"PageView"> | string | null
+    browser?: StringNullableFilter<"PageView"> | string | null
+    os?: StringNullableFilter<"PageView"> | string | null
+    device?: StringNullableFilter<"PageView"> | string | null
+    ip?: StringNullableFilter<"PageView"> | string | null
+    userAgent?: StringNullableFilter<"PageView"> | string | null
+    duration?: IntNullableFilter<"PageView"> | number | null
+    createdAt?: DateTimeFilter<"PageView"> | Date | string
+  }
+
+  export type PageViewOrderByWithRelationInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    referrer?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    browser?: SortOrderInput | SortOrder
+    os?: SortOrderInput | SortOrder
+    device?: SortOrderInput | SortOrder
+    ip?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    duration?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PageViewWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PageViewWhereInput | PageViewWhereInput[]
+    OR?: PageViewWhereInput[]
+    NOT?: PageViewWhereInput | PageViewWhereInput[]
+    sessionId?: StringFilter<"PageView"> | string
+    url?: StringFilter<"PageView"> | string
+    referrer?: StringNullableFilter<"PageView"> | string | null
+    country?: StringNullableFilter<"PageView"> | string | null
+    region?: StringNullableFilter<"PageView"> | string | null
+    city?: StringNullableFilter<"PageView"> | string | null
+    browser?: StringNullableFilter<"PageView"> | string | null
+    os?: StringNullableFilter<"PageView"> | string | null
+    device?: StringNullableFilter<"PageView"> | string | null
+    ip?: StringNullableFilter<"PageView"> | string | null
+    userAgent?: StringNullableFilter<"PageView"> | string | null
+    duration?: IntNullableFilter<"PageView"> | number | null
+    createdAt?: DateTimeFilter<"PageView"> | Date | string
+  }, "id">
+
+  export type PageViewOrderByWithAggregationInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    referrer?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    browser?: SortOrderInput | SortOrder
+    os?: SortOrderInput | SortOrder
+    device?: SortOrderInput | SortOrder
+    ip?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    duration?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: PageViewCountOrderByAggregateInput
+    _avg?: PageViewAvgOrderByAggregateInput
+    _max?: PageViewMaxOrderByAggregateInput
+    _min?: PageViewMinOrderByAggregateInput
+    _sum?: PageViewSumOrderByAggregateInput
+  }
+
+  export type PageViewScalarWhereWithAggregatesInput = {
+    AND?: PageViewScalarWhereWithAggregatesInput | PageViewScalarWhereWithAggregatesInput[]
+    OR?: PageViewScalarWhereWithAggregatesInput[]
+    NOT?: PageViewScalarWhereWithAggregatesInput | PageViewScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PageView"> | string
+    sessionId?: StringWithAggregatesFilter<"PageView"> | string
+    url?: StringWithAggregatesFilter<"PageView"> | string
+    referrer?: StringNullableWithAggregatesFilter<"PageView"> | string | null
+    country?: StringNullableWithAggregatesFilter<"PageView"> | string | null
+    region?: StringNullableWithAggregatesFilter<"PageView"> | string | null
+    city?: StringNullableWithAggregatesFilter<"PageView"> | string | null
+    browser?: StringNullableWithAggregatesFilter<"PageView"> | string | null
+    os?: StringNullableWithAggregatesFilter<"PageView"> | string | null
+    device?: StringNullableWithAggregatesFilter<"PageView"> | string | null
+    ip?: StringNullableWithAggregatesFilter<"PageView"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"PageView"> | string | null
+    duration?: IntNullableWithAggregatesFilter<"PageView"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"PageView"> | Date | string
+  }
+
+  export type ClickEventWhereInput = {
+    AND?: ClickEventWhereInput | ClickEventWhereInput[]
+    OR?: ClickEventWhereInput[]
+    NOT?: ClickEventWhereInput | ClickEventWhereInput[]
+    id?: StringFilter<"ClickEvent"> | string
+    sessionId?: StringFilter<"ClickEvent"> | string
+    url?: StringFilter<"ClickEvent"> | string
+    element?: StringNullableFilter<"ClickEvent"> | string | null
+    text?: StringNullableFilter<"ClickEvent"> | string | null
+    href?: StringNullableFilter<"ClickEvent"> | string | null
+    createdAt?: DateTimeFilter<"ClickEvent"> | Date | string
+  }
+
+  export type ClickEventOrderByWithRelationInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    element?: SortOrderInput | SortOrder
+    text?: SortOrderInput | SortOrder
+    href?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ClickEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ClickEventWhereInput | ClickEventWhereInput[]
+    OR?: ClickEventWhereInput[]
+    NOT?: ClickEventWhereInput | ClickEventWhereInput[]
+    sessionId?: StringFilter<"ClickEvent"> | string
+    url?: StringFilter<"ClickEvent"> | string
+    element?: StringNullableFilter<"ClickEvent"> | string | null
+    text?: StringNullableFilter<"ClickEvent"> | string | null
+    href?: StringNullableFilter<"ClickEvent"> | string | null
+    createdAt?: DateTimeFilter<"ClickEvent"> | Date | string
+  }, "id">
+
+  export type ClickEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    element?: SortOrderInput | SortOrder
+    text?: SortOrderInput | SortOrder
+    href?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ClickEventCountOrderByAggregateInput
+    _max?: ClickEventMaxOrderByAggregateInput
+    _min?: ClickEventMinOrderByAggregateInput
+  }
+
+  export type ClickEventScalarWhereWithAggregatesInput = {
+    AND?: ClickEventScalarWhereWithAggregatesInput | ClickEventScalarWhereWithAggregatesInput[]
+    OR?: ClickEventScalarWhereWithAggregatesInput[]
+    NOT?: ClickEventScalarWhereWithAggregatesInput | ClickEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ClickEvent"> | string
+    sessionId?: StringWithAggregatesFilter<"ClickEvent"> | string
+    url?: StringWithAggregatesFilter<"ClickEvent"> | string
+    element?: StringNullableWithAggregatesFilter<"ClickEvent"> | string | null
+    text?: StringNullableWithAggregatesFilter<"ClickEvent"> | string | null
+    href?: StringNullableWithAggregatesFilter<"ClickEvent"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ClickEvent"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -20887,6 +23430,195 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PageViewCreateInput = {
+    id?: string
+    sessionId: string
+    url: string
+    referrer?: string | null
+    country?: string | null
+    region?: string | null
+    city?: string | null
+    browser?: string | null
+    os?: string | null
+    device?: string | null
+    ip?: string | null
+    userAgent?: string | null
+    duration?: number | null
+    createdAt?: Date | string
+  }
+
+  export type PageViewUncheckedCreateInput = {
+    id?: string
+    sessionId: string
+    url: string
+    referrer?: string | null
+    country?: string | null
+    region?: string | null
+    city?: string | null
+    browser?: string | null
+    os?: string | null
+    device?: string | null
+    ip?: string | null
+    userAgent?: string | null
+    duration?: number | null
+    createdAt?: Date | string
+  }
+
+  export type PageViewUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    browser?: NullableStringFieldUpdateOperationsInput | string | null
+    os?: NullableStringFieldUpdateOperationsInput | string | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PageViewUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    browser?: NullableStringFieldUpdateOperationsInput | string | null
+    os?: NullableStringFieldUpdateOperationsInput | string | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PageViewCreateManyInput = {
+    id?: string
+    sessionId: string
+    url: string
+    referrer?: string | null
+    country?: string | null
+    region?: string | null
+    city?: string | null
+    browser?: string | null
+    os?: string | null
+    device?: string | null
+    ip?: string | null
+    userAgent?: string | null
+    duration?: number | null
+    createdAt?: Date | string
+  }
+
+  export type PageViewUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    browser?: NullableStringFieldUpdateOperationsInput | string | null
+    os?: NullableStringFieldUpdateOperationsInput | string | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PageViewUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    browser?: NullableStringFieldUpdateOperationsInput | string | null
+    os?: NullableStringFieldUpdateOperationsInput | string | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventCreateInput = {
+    id?: string
+    sessionId: string
+    url: string
+    element?: string | null
+    text?: string | null
+    href?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ClickEventUncheckedCreateInput = {
+    id?: string
+    sessionId: string
+    url: string
+    element?: string | null
+    text?: string | null
+    href?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ClickEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    element?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    href?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    element?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    href?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventCreateManyInput = {
+    id?: string
+    sessionId: string
+    url: string
+    element?: string | null
+    text?: string | null
+    href?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ClickEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    element?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    href?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClickEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    element?: NullableStringFieldUpdateOperationsInput | string | null
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    href?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -21923,6 +24655,95 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type PageViewCountOrderByAggregateInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    referrer?: SortOrder
+    country?: SortOrder
+    region?: SortOrder
+    city?: SortOrder
+    browser?: SortOrder
+    os?: SortOrder
+    device?: SortOrder
+    ip?: SortOrder
+    userAgent?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PageViewAvgOrderByAggregateInput = {
+    duration?: SortOrder
+  }
+
+  export type PageViewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    referrer?: SortOrder
+    country?: SortOrder
+    region?: SortOrder
+    city?: SortOrder
+    browser?: SortOrder
+    os?: SortOrder
+    device?: SortOrder
+    ip?: SortOrder
+    userAgent?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PageViewMinOrderByAggregateInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    referrer?: SortOrder
+    country?: SortOrder
+    region?: SortOrder
+    city?: SortOrder
+    browser?: SortOrder
+    os?: SortOrder
+    device?: SortOrder
+    ip?: SortOrder
+    userAgent?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PageViewSumOrderByAggregateInput = {
+    duration?: SortOrder
+  }
+
+  export type ClickEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    element?: SortOrder
+    text?: SortOrder
+    href?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ClickEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    element?: SortOrder
+    text?: SortOrder
+    href?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ClickEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    sessionId?: SortOrder
+    url?: SortOrder
+    element?: SortOrder
+    text?: SortOrder
+    href?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {

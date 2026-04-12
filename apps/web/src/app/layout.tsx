@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import "./globals.css";
 
 const SITE_URL = "https://www.factverseinsight.com"
@@ -129,6 +130,7 @@ export default function RootLayout({
         />
         <Providers>
           <TooltipProvider>
+            <AnalyticsTracker />
             {children}
             <Toaster />
           </TooltipProvider>

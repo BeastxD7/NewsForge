@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
-import { LayoutDashboard, FileText, Settings, LogOut, ExternalLink, Upload } from "lucide-react"
+import { LayoutDashboard, FileText, Settings, LogOut, ExternalLink, Upload, BarChart2 } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +20,7 @@ const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/articles", label: "Article Queue", icon: FileText },
   { href: "/admin/ingest", label: "Manual Ingest", icon: Upload },
+  { href: "/admin/analytics", label: "Analytics", icon: BarChart2 },
   { href: "/admin/ai-config", label: "AI Config", icon: Settings },
 ]
 

@@ -283,6 +283,33 @@ exports.Prisma.AiConfigScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PageViewScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  url: 'url',
+  referrer: 'referrer',
+  country: 'country',
+  region: 'region',
+  city: 'city',
+  browser: 'browser',
+  os: 'os',
+  device: 'device',
+  ip: 'ip',
+  userAgent: 'userAgent',
+  duration: 'duration',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ClickEventScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  url: 'url',
+  element: 'element',
+  text: 'text',
+  href: 'href',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -369,7 +396,9 @@ exports.Prisma.ModelName = {
   YoutubeChannel: 'YoutubeChannel',
   MediaUpload: 'MediaUpload',
   JobRun: 'JobRun',
-  AiConfig: 'AiConfig'
+  AiConfig: 'AiConfig',
+  PageView: 'PageView',
+  ClickEvent: 'ClickEvent'
 };
 
 /**

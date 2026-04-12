@@ -1,6 +1,7 @@
 import { Router } from "express"
 import { articlesRouter } from "./articles/articles.router"
 import { adminRouter } from "./admin/admin.router"
+import { analyticsRouter } from "./analytics/analytics.router"
 import { prisma } from "../../lib/prisma"
 import { apiSuccess } from "../../lib/response"
 
@@ -22,6 +23,7 @@ router.get("/health", async (_req, res) => {
 
 router.use("/articles", articlesRouter)
 router.use("/admin", adminRouter)
+router.use("/analytics", analyticsRouter)
 
 router.get("/categories", async (_req, res) => {
   const categories = await prisma.category.findMany({ orderBy: { name: "asc" } })
