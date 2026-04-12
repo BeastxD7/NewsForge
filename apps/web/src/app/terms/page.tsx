@@ -141,11 +141,11 @@ export default function TermsPage() {
         </section>
 
         {/* ── Sections ── */}
-        <div className="max-w-3xl mx-auto px-6 py-14 space-y-12">
+        <div className="max-w-3xl mx-auto px-6 py-14 space-y-10">
           {sections.map((s, i) => (
-            <section key={i} className="grid sm:grid-cols-[200px_1fr] gap-6 sm:gap-10 items-start">
-              <h2 className="text-sm font-bold text-foreground pt-0.5 leading-snug">{s.title}</h2>
-              <div className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">
+            <section key={i} className="border-b border-border/50 pb-10 last:border-0 last:pb-0">
+              <h2 className="text-base font-bold text-foreground mb-4">{s.title}</h2>
+              <div className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm space-y-3">
                 {s.content}
               </div>
             </section>
